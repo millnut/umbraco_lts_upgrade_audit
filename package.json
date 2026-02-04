@@ -1,0 +1,48 @@
+{
+  "name": "umbraco-audit",
+  "version": "0.1.0",
+  "description": "CLI tool to audit and estimate upgrade effort for Umbraco 13 LTS to Umbraco 17 LTS migrations",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "bin": {
+    "umbraco-audit": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [
+    "umbraco",
+    "upgrade",
+    "audit",
+    "cli",
+    "migration"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.0.0",
+    "fast-glob": "^3.3.0",
+    "fast-xml-parser": "^4.4.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^2.0.0"
+  }
+}
