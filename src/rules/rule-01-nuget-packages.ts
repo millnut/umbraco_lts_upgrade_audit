@@ -12,11 +12,29 @@ import { debug } from '../utils/logger.js';
  * Detects packages that need updating for Umbraco 17 / .NET 10 compatibility.
  * Queries NuGet API to determine latest versions and compatibility.
  * 
- * Hours: 0.5h per package needing update
+ * Hours: 1.5h for major version bumps, 0.5h for minor/patch updates
  */
 
 const RULE_ID = 'rule-01-nuget-packages';
-const BASE_HOURS = 0.5;
+const BASE_HOURS_MINOR = 0.5;
+const BASE_HOURS_MAJOR = 1.5;
+
+/**
+ * Extract major version from a version string (e.g., "13.0.0" -> 13)
+ */
+function getMajorVersion(version: string): number {
+  const match = version.match(/^(\d+)/);
+  return match ? parseInt(match[1], 10) : 0;
+}
+
+/**
+ * Check if version change is a major version bump
+ */
+function isMajorVersionBump(currentVersion: string, latestVersion: string): boolean {
+  const currentMajor = getMajorVersion(currentVersion);
+  const latestMajor = getMajorVersion(latestVersion);
+  return latestMajor > currentMajor;
+}
 
 export const rule01NuGetPackages: Rule = {
   id: RULE_ID,
@@ -24,7 +42,7 @@ export const rule01NuGetPackages: Rule = {
   description:
     'Detects NuGet packages that need updating for Umbraco 17 and .NET 10 compatibility',
   category: 'package-updates',
-  baseHours: BASE_HOURS,
+  baseHours: BASE_HOURS_MINOR, // Default for reporting, actual hours calculated per package
   enabled: true,
   filePatterns: ['**/*.csproj'],
 
@@ -77,7 +95,9 @@ export const rule01NuGetPackages: Rule = {
 
       if (needsUpdate) {
         // Create one finding per package (not per file)
-        const hours = calculateHours(BASE_HOURS, 1);
+        const isMajorBump = isMajorVersionBump(currentVersion, latestVersion);
+        const baseHours = isMajorBump ? BASE_HOURS_MAJOR : BASE_HOURS_MINOR;
+        const hours = calculateHours(baseHours, 1);
 
         const metadata = {
           packageName,
