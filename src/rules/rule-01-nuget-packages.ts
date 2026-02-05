@@ -12,12 +12,12 @@ import { debug } from '../utils/logger.js';
  * Detects packages that need updating for Umbraco 17 / .NET 10 compatibility.
  * Queries NuGet API to determine latest versions and compatibility.
  * 
- * Hours: 1.5h for major version bumps, 0.5h for minor/patch updates
+ * Hours: 1h for major version bumps, 0.5h for minor/patch updates
  */
 
 const RULE_ID = 'rule-01-nuget-packages';
 const BASE_HOURS_MINOR = 0.5;
-const BASE_HOURS_MAJOR = 1.5;
+const BASE_HOURS_MAJOR = 1.0;
 
 /**
  * Extract major version from a version string (e.g., "13.0.0" -> 13)
