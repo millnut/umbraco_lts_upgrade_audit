@@ -23,7 +23,7 @@
     "cli",
     "migration"
   ],
-  "author": "",
+  "author": "Lee Mills",
   "license": "MIT",
   "engines": {
     "node": ">=22.0.0"
