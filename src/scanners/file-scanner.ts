@@ -63,7 +63,7 @@ export async function findCSharpFiles(projectPath: string): Promise<string[]> {
  * @returns Array of .js/.ts file paths
  */
 export async function findAppPluginFiles(projectPath: string): Promise<string[]> {
-  return scanFiles('**/App_Plugins/**/*.{js,ts}', projectPath);
+  return scanFiles('**/App_Plugins/**/*.{js,ts,html}', projectPath);
 }
 
 /**
