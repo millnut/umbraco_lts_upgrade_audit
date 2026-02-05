@@ -1,10 +1,7 @@
-import { debug } from '../utils/logger.js';
+import { debug, warn } from '../utils/logger.js';
 
 /**
  * NuGet API client for package version lookup
- * 
- * Why: Rule 1 needs to check package versions against NuGet.
- * Implements caching to minimize API calls per constitution performance principle.
  */
 
 /**
@@ -22,23 +19,16 @@ export interface NuGetPackageMetadata {
  */
 const packageCache = new Map<string, NuGetPackageMetadata>();
 
-/**
- * Clear the package cache (useful for testing)
- */
 export function clearPackageCache(): void {
   packageCache.clear();
 }
 
 /**
- * Query NuGet API for package metadata
- * 
- * @param packageName - Package name to lookup
- * @returns Package metadata or null if not found
+ * Public API
  */
 export async function queryNuGetPackage(
   packageName: string
 ): Promise<NuGetPackageMetadata | null> {
-  // Check cache first
   if (packageCache.has(packageName)) {
     debug(`Cache hit for package: ${packageName}`);
     return packageCache.get(packageName)!;
@@ -47,40 +37,9 @@ export async function queryNuGetPackage(
   debug(`Querying NuGet API for package: ${packageName}`);
 
   try {
-    // Use NuGet V3 API registration endpoint
-    const url = `https://api.nuget.org/v3/registration5-semver1/${packageName.toLowerCase()}/index.json`;
-    const response = await fetch(url);
+    const latestVersion = await fetchLatestVersion(packageName);
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        debug(`Package not found on NuGet: ${packageName}`);
-        const metadata: NuGetPackageMetadata = {
-          packageName,
-          latestVersion: null,
-          isCompatible: null,
-          error: 'Package not found',
-        };
-        packageCache.set(packageName, metadata);
-        return metadata;
-      }
-      throw new Error(`NuGet API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = (await response.json()) as {
-      items?: Array<{
-        items?: Array<{
-          catalogEntry?: {
-            version?: string;
-            dependencyGroups?: Array<{ targetFramework?: string }>;
-          };
-        }>;
-      }>;
-    };
-
-    // Extract latest version from the catalog
-    const items = data.items || [];
-    if (items.length === 0) {
-      debug(`No versions found for package: ${packageName}`);
+    if (!latestVersion) {
       const metadata: NuGetPackageMetadata = {
         packageName,
         latestVersion: null,
@@ -88,49 +47,32 @@ export async function queryNuGetPackage(
         error: 'No versions found',
       };
       packageCache.set(packageName, metadata);
+      warn(`No package metadata found for: ${packageName}`);
       return metadata;
     }
 
-    // Get the last item which contains the latest versions
-    const lastItem = items[items.length - 1];
-    const catalogEntries = lastItem.items || [];
-
-    if (catalogEntries.length === 0) {
-      debug(`No catalog entries for package: ${packageName}`);
-      const metadata: NuGetPackageMetadata = {
-        packageName,
-        latestVersion: null,
-        isCompatible: null,
-      };
-      packageCache.set(packageName, metadata);
-      return metadata;
-    }
-
-    // Get the latest version (last entry)
-    const latestEntry = catalogEntries[catalogEntries.length - 1];
-    const latestVersion = latestEntry.catalogEntry?.version || null;
-
-    // Check for .NET 10 compatibility in dependency groups
-    const dependencyGroups = latestEntry.catalogEntry?.dependencyGroups || [];
-    const isCompatible = dependencyGroups.some(
-      (group: { targetFramework?: string }) =>
-        group.targetFramework?.includes('net10.0') ||
-        group.targetFramework?.includes('net9.0') ||
-        group.targetFramework?.includes('netstandard2.0')
+    const targetFrameworks = await resolveTargetFrameworks(
+      packageName,
+      latestVersion
     );
+
+    const isCompatible =
+      targetFrameworks.length === 0
+        ? null
+        : isSupportedFramework(targetFrameworks);
 
     const metadata: NuGetPackageMetadata = {
       packageName,
       latestVersion,
-      isCompatible: dependencyGroups.length > 0 ? isCompatible : null,
+      isCompatible,
     };
 
     packageCache.set(packageName, metadata);
     debug(`Retrieved package metadata: ${JSON.stringify(metadata)}`);
-
     return metadata;
   } catch (error) {
     debug(`Failed to query NuGet API for ${packageName}: ${error}`);
+    warn(`Failed to retrieve package metadata for: ${packageName}`);
     const metadata: NuGetPackageMetadata = {
       packageName,
       latestVersion: null,
@@ -142,12 +84,153 @@ export async function queryNuGetPackage(
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                               Helper logic                                 */
+/* -------------------------------------------------------------------------- */
+
 /**
- * Batch query multiple packages
- * 
- * @param packageNames - Array of package names
- * @returns Map of package name to metadata
+ * Resolve the latest package version via the registration API
  */
+async function fetchLatestVersion(packageName: string): Promise<string | null> {
+  const indexUrl = `https://api.nuget.org/v3/registration5-semver1/${packageName.toLowerCase()}/index.json`;
+  const indexResponse = await fetch(indexUrl);
+
+  if (indexResponse.status === 404) return null;
+  if (!indexResponse.ok) {
+    throw new Error(`NuGet API error: ${indexResponse.status}`);
+  }
+
+  const index = (await indexResponse.json()) as {
+    items?: Array<{ '@id': string }>;
+  };
+
+  const pages = index.items ?? [];
+  if (pages.length === 0) return null;
+
+  // Walk pages from newest → oldest
+  for (let p = pages.length - 1; p >= 0; p--) {
+    const pageUrl = pages[p]['@id'];
+    const pageResponse = await fetch(pageUrl);
+    if (!pageResponse.ok) continue;
+
+    const page = (await pageResponse.json()) as {
+      items?: Array<{
+        catalogEntry?: {
+          version?: string;
+        };
+      }>;
+    };
+
+    const entries = page.items ?? [];
+
+    // Walk versions from newest → oldest
+    for (let i = entries.length - 1; i >= 0; i--) {
+      const version = entries[i].catalogEntry?.version;
+      if (version && isStableVersion(version)) {
+        return version;
+      }
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Resolve target frameworks:
+ * 1. catalogEntry (fast path)
+ * 2. nuspec (authoritative fallback)
+ */
+async function resolveTargetFrameworks(
+  packageName: string,
+  version: string
+): Promise<string[]> {
+  const frameworksFromCatalog = await fetchFrameworksFromCatalog(
+    packageName,
+    version
+  );
+
+  if (frameworksFromCatalog.length > 0) {
+    return frameworksFromCatalog;
+  }
+
+  debug(`Falling back to nuspec for ${packageName}@${version}`);
+  return fetchFrameworksFromNuspec(packageName, version);
+}
+
+/**
+ * Extract frameworks from registration catalogEntry
+ */
+async function fetchFrameworksFromCatalog(
+  packageName: string,
+  version: string
+): Promise<string[]> {
+  const url = `https://api.nuget.org/v3/registration5-semver1/${packageName.toLowerCase()}/index.json`;
+  const response = await fetch(url);
+
+  if (!response.ok) return [];
+
+  const data = (await response.json()) as {
+    items?: Array<{
+      items?: Array<{
+        catalogEntry?: {
+          version?: string;
+          dependencyGroups?: Array<{ targetFramework?: string }>;
+        };
+      }>;
+    }>;
+  };
+
+  for (const page of data.items ?? []) {
+    for (const entry of page.items ?? []) {
+      if (entry.catalogEntry?.version === version) {
+        return (
+          entry.catalogEntry.dependencyGroups
+            ?.map(g => g.targetFramework)
+            .filter((f): f is string => !!f) ?? []
+        );
+      }
+    }
+  }
+
+  return [];
+}
+
+/**
+ * Extract frameworks from .nuspec (source of truth)
+ */
+async function fetchFrameworksFromNuspec(
+  packageName: string,
+  version: string
+): Promise<string[]> {
+  const id = packageName.toLowerCase();
+  const url = `https://api.nuget.org/v3-flatcontainer/${id}/${version}/${id}.nuspec`;
+  const response = await fetch(url);
+
+  if (!response.ok) return [];
+
+  const xml = await response.text();
+
+  return Array.from(
+    xml.matchAll(/<group\s+targetFramework="([^"]+)"/gi)
+  ).map(match => match[1]);
+}
+
+/**
+ * Compatibility rule
+ */
+function isSupportedFramework(targetFrameworks: string[]): boolean {
+  return targetFrameworks.some(tf =>
+    tf.includes('net10.0') ||
+    tf.includes('net9.0') ||
+    tf.includes('net8.0') ||
+    tf.includes('netstandard2.0')
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               Batch helper                                 */
+/* -------------------------------------------------------------------------- */
+
 export async function batchQueryPackages(
   packageNames: string[]
 ): Promise<Map<string, NuGetPackageMetadata | null>> {
@@ -155,13 +238,17 @@ export async function batchQueryPackages(
 
   const results = new Map<string, NuGetPackageMetadata | null>();
 
-  // Query packages in parallel
-  const promises = packageNames.map(async (name) => {
-    const metadata = await queryNuGetPackage(name);
-    results.set(name, metadata);
-  });
-
-  await Promise.all(promises);
+  await Promise.all(
+    packageNames.map(async name => {
+      const metadata = await queryNuGetPackage(name);
+      results.set(name, metadata);
+    })
+  );
 
   return results;
+}
+
+function isStableVersion(version: string): boolean {
+  // Any '-' means prerelease in SemVer
+  return !version.includes('-');
 }
