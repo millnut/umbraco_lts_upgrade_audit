@@ -8,7 +8,7 @@ import { parseProjectFile, extractUmbracoVersion } from '../../scanners/csproj-p
 import { formatConsoleOutput } from '../output/formatters/console.js';
 import { formatJsonOutput } from '../output/formatters/json.js';
 import { formatHtmlOutput } from '../output/formatters/html.js';
-import { setDebugMode, debug, error, info } from '../../utils/logger.js';
+import { setDebugMode, debug, error, info, warn } from '../../utils/logger.js';
 import { hoursToDays } from '../../utils/hours.js';
 
 // Import all rules
@@ -89,6 +89,12 @@ export async function executeAuditCommand(
     
     if (umbracoVersion) {
       info(`Detected Umbraco version: ${umbracoVersion}`);
+      
+      // Check if version is 13.x but not 13.13.0
+      if (umbracoVersion.startsWith('13.') && umbracoVersion !== '13.13.0') {
+        warn('Before upgrading to v17, you must first upgrade to Umbraco 13.13.0 (the final LTS release of v13).');
+        warn('Please upgrade to 13.13.0 first, then proceed with the v17 upgrade.');
+      }
     } else {
       error('Could not detect Umbraco version. This may not be an Umbraco project.');
       process.exit(1);
@@ -104,7 +110,7 @@ export async function executeAuditCommand(
   };
 
   // Execute all rules
-  info('Running audit rules...\n');
+  info('\nRunning audit rules...\n');
   const findings = await executeAllRules(context);
 
   const scanDuration = Date.now() - startTime;
