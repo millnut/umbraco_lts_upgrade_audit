@@ -23,5 +23,5 @@ export function getUmbracoLogo(version: string): string {
 }
 
 export function getH5YRFooter(): string {
-  return '\n#H5YR! 🙌 Thanks for using the Umbraco Upgrade Audit Tool!\n       The Umbraco community appreciates you.\n';
+  return '\n#H5YR! 🙌 Thanks for using the Umbraco Upgrade Audit Tool!';
 }

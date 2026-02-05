@@ -212,7 +212,6 @@ export function formatHtmlOutput(report: AuditReport): string {
   <div class="footer">
     <div class="h5yr">#H5YR! 🙌</div>
     <div>Thanks for using the Umbraco Upgrade Audit Tool!</div>
-    <div>The Umbraco community appreciates you.</div>
     
     <div class="metadata">
       <strong>Report Generated:</strong> ${report.timestamp.toLocaleString()}<br>

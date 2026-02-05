@@ -86,7 +86,6 @@ umbraco-audit <path> [options]
 
 ```
 H5YR! 🙌 Thanks for using the Umbraco Upgrade Audit Tool!
-       The Umbraco community appreciates you.
 ```
 
 ## JSON Output Schema

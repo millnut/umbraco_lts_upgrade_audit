@@ -83,7 +83,6 @@ The tool applies 7 rules to detect upgrade-relevant changes:
 └────────────────────────────────────────────────────────────────────────────┘
 
 #H5YR! 🙌 Thanks for using the Umbraco Upgrade Audit Tool!
-       The Umbraco community appreciates you.
 ```
 
 ## Development
