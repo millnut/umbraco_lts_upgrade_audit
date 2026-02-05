@@ -17,8 +17,8 @@ import ignore from 'ignore';
  */
 
 const RULE_ID = 'rule-07-angular-detection';
-const BASE_HOURS = 2.0;
-const ADDITIONAL_HOURS_PER_10_FILES = 0.5;
+const BASE_HOURS = 5 * 8; // 5 days * 8 hours/day = 40 hours
+const ADDITIONAL_HOURS_PER_10_FILES = 4;
 
 /**
  * AngularJS patterns from research.md
