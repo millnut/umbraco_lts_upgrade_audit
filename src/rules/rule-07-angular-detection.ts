@@ -13,7 +13,7 @@ import ignore from 'ignore';
  * Detects AngularJS patterns in App_Plugins that need migration to Umbraco 17's
  * new backoffice architecture (Lit/Web Components).
  * 
- * Hours: 2h base + 0.5h per 10 files
+ * Hours: 5d base + 4h per 10 files
  */
 
 const RULE_ID = 'rule-07-angular-detection';

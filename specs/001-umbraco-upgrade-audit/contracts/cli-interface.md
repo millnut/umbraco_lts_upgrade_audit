@@ -74,10 +74,10 @@ umbraco-audit <path> [options]
 ├──────────────────────────────────┼────────────┼────────────────────┤
 │ ViewImports Smidge Removal       │          1 │              0.5   │
 ├──────────────────────────────────┼────────────┼────────────────────┤
-│ Angular Files Detected           │         24 │              3.2   │
+│ Angular Files Detected           │          8 │             40.0   │
 ├──────────────────────────────────┴────────────┴────────────────────┤
 │                                                                     │
-│  TOTAL ESTIMATE:  14.7 hours  (~1.8 days @ 8h/day)                 │
+│  TOTAL ESTIMATE:  51.5 hours  (~6.4 days @ 8h/day)                 │
 │                                                                     │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -157,10 +157,10 @@ interface JsonOutput {
     "scanDurationMs": 1523
   },
   "summary": {
-    "totalHours": 14.7,
-    "totalDays": 1.84,
+    "totalHours": 51.5,
+    "totalDays": 6.44,
     "rulesTriggered": 7,
-    "totalFindings": 44
+    "totalFindings": 32
   },
   "rules": [
     {

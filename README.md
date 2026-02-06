@@ -47,13 +47,13 @@ The tool applies 7 rules to detect upgrade-relevant changes:
 
 | Rule | Detection | Base Hours |
 |------|-----------|------------|
-| **NuGet Package Updates** | Checks package versions against NuGet API | 0.5h per package |
+| **NuGet Package Updates** | Checks package versions against NuGet API | 0.5h for minor/patch, 1.0h for major version bumps |
 | **Removed Extension Methods** | Detects 17 removed extension methods | 1.0h per occurrence |
 | **Tiptap Import Changes** | Finds Tiptap imports needing updates | 0.5h per file |
 | **Removed Packages** | Detects 3 packages removed in v17 | 0.5h per package |
 | **Program.cs Changes** | Finds `UseInstallerEndpoints()` calls | 0.5h fixed |
 | **ViewImports Smidge** | Detects Smidge TagHelper references | 0.5h fixed |
-| **Angular Detection** | Counts AngularJS files in App_Plugins | 2h base + 0.5h/10 files |
+| **Angular Detection** | Counts AngularJS files in App_Plugins | 40h base (5 days) + 4h per 10 files |
 
 ## Sample Output
 
@@ -78,8 +78,10 @@ The tool applies 7 rules to detect upgrade-relevant changes:
 │ Tiptap Import Changes                            │ 2          │ 1.0        │
 ├──────────────────────────────────────────────────┼────────────┼────────────┤
 │ Program.cs Changes                               │ 1          │ 0.5        │
+├──────────────────────────────────────────────────┼────────────┼────────────┤
+│ Angular Files Detected                           │ 8          │ 40.0       │
 ├──────────────────────────────────────────────────┴────────────┴────────────┤
-│              TOTAL ESTIMATE:  10.5 hours  (~1.3 days @ 8h/day)             │
+│              TOTAL ESTIMATE:  51.0 hours  (~6.4 days @ 8h/day)             │
 └────────────────────────────────────────────────────────────────────────────┘
 
 #H5YR! 🙌 Thanks for using the Umbraco Upgrade Audit Tool!

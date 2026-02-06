@@ -151,17 +151,13 @@ umbraco-audit <path>
 
 | Rule | Base Hours | Scaling |
 |------|------------|---------|
-| Rule 1 - Package Update | 0.5h | Per package needing update |
+| Rule 1 - Package Update | 0.5h minor, 1.0h major | Per package needing update (major version bumps take longer) |
 | Rule 2 - Removed Methods | 1.0h | Per occurrence (requires code change) |
 | Rule 3 - Tiptap Import | 0.5h | Per file with import |
 | Rule 4 - Removed Packages | 0.5h | Per package to remove |
 | Rule 5 - Program.cs | 0.5h | Fixed (single file) |
 | Rule 6 - ViewImports | 0.5h | Fixed (single file) |
-| Rule 7 - Angular Files | 2.0h | Base + 0.5h per 10 files |
-
-## Rule Detection Patterns
-
-### Rule 2: Removed Extension Methods (17 methods)
+| Rule 7 - Angular Files | 40.0h (5 days) | Base + 4h per 10 files |
 
 The following extension methods have been removed in Umbraco 17 and must be detected in `.cs` files:
 
