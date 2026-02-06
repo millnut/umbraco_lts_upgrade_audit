@@ -21,6 +21,7 @@ import { rule06ViewImports } from '../../rules/rule-06-view-imports.js';
 import { rule07AngularDetection } from '../../rules/rule-07-angular-detection.js';
 import { rule08PublishedSnapshotInterfaces } from '../../rules/rule-08-published-snapshot-interfaces.js';
 import { rule09UdaPropertyEditors } from '../../rules/rule-09-uda-property-editors.js';
+import { rule10LicenseFiles } from '../../rules/rule-10-license-files.js';
 
 /**
  * Audit command options
@@ -72,6 +73,7 @@ export async function executeAuditCommand(
   registerRule(rule07AngularDetection);
   registerRule(rule08PublishedSnapshotInterfaces);
   registerRule(rule09UdaPropertyEditors);
+  registerRule(rule10LicenseFiles);
 
   debug(`Registered ${getAllRules().length} rules`);
 
