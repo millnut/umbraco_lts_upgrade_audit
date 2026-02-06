@@ -21,6 +21,23 @@ const BASE_HOURS = 5 * 8; // 5 days * 8 hours/day = 40 hours
 const ADDITIONAL_HOURS_PER_10_FILES = 4;
 
 /**
+ * App_Plugins directories to ignore (known commercial/community packages)
+ */
+const IGNORED_APP_PLUGINS_DIRS = [
+  'cmsimport',
+  'ConditionalDisplayers',
+  'Contentment',
+  'DiploAuditLogViewer',
+  'Our.Umbraco.GMaps',
+  'PersonalisationGroups',
+  'Umbraco.Engage',
+  'Umbraco.Engage.Forms',
+  'UmbracoCms.Integrations',
+  'UmbracoCommerce',
+  'UmbracoId',
+];
+
+/**
  * AngularJS patterns from research.md
  */
 const ANGULAR_PATTERNS = [
@@ -83,12 +100,27 @@ export const rule07AngularDetection: Rule = {
     }
 
     // Filter files based on .gitignore (convert to relative paths for ignore package)
-    const filteredFiles = appPluginFiles.filter((filePath) => {
+    const gitignoreFiltered = appPluginFiles.filter((filePath) => {
       const relativePath = relative(gitignoreRoot, filePath);
       return !ig.ignores(relativePath);
     });
 
-    debug(`[${RULE_ID}] Found ${filteredFiles.length} App_Plugins JS/TS/HTML files`);
+    // Filter out ignored App_Plugins directories
+    const filteredFiles = gitignoreFiltered.filter((filePath) => {
+      const normalizedPath = filePath.replace(/\\/g, '/');
+      const appPluginsIndex = normalizedPath.indexOf('App_Plugins/');
+
+      if (appPluginsIndex === -1) return true;
+
+      const afterAppPlugins = normalizedPath.substring(appPluginsIndex + 'App_Plugins/'.length);
+      const firstDir = afterAppPlugins.split('/')[0];
+
+      return !IGNORED_APP_PLUGINS_DIRS.includes(firstDir);
+    });
+
+    debug(
+      `[${RULE_ID}] Found ${filteredFiles.length} App_Plugins JS/TS/HTML files (after filtering ignored directories)`,
+    );
 
     // Track files with Angular patterns
     const angularFiles = new Set<string>();
