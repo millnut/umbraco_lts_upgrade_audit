@@ -3,7 +3,7 @@ import { isUmbracoPackage, parseProjectFile } from '../scanners/csproj-parser.js
 import { findProjectFiles } from '../scanners/file-scanner.js';
 import { batchQueryPackages } from '../scanners/nuget-client.js';
 import { calculateHours } from '../utils/hours.js';
-import { debug } from '../utils/logger.js';
+import { debug, warn } from '../utils/logger.js';
 import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
@@ -91,6 +91,10 @@ export const rule01NuGetPackages: Rule = {
 
       // Determine if update is needed (simple version comparison)
       const needsUpdate = currentVersion !== latestVersion;
+
+      if ((nugetData.isCompatible === false || nugetData.isCompatible === null)) {
+        warn(`Unable to determine compatibility with .NET 10 or Umbraco v17: ${packageName}`);
+      }
 
       if (needsUpdate) {
         // Create one finding per package (not per file)

@@ -164,6 +164,39 @@ function extractEntriesFromInlineItems(items: any[]): Array<{
 }
 
 /**
+ * Parse a semantic version string into comparable parts
+ */
+function parseSemanticVersion(version: string): number[] {
+  const parts = version.split('.').map((p) => {
+    const num = parseInt(p, 10);
+    return isNaN(num) ? 0 : num;
+  });
+  // Ensure we have at least [major, minor, patch]
+  while (parts.length < 3) parts.push(0);
+  return parts;
+}
+
+/**
+ * Compare two semantic versions: returns -1 if a < b, 0 if equal, 1 if a > b
+ */
+function compareSemanticVersions(a: string, b: string): number {
+  const aParts = parseSemanticVersion(a);
+  const bParts = parseSemanticVersion(b);
+  
+  const maxLength = Math.max(aParts.length, bParts.length);
+  
+  for (let i = 0; i < maxLength; i++) {
+    const aVal = aParts[i] ?? 0;
+    const bVal = bParts[i] ?? 0;
+    
+    if (aVal < bVal) return -1;
+    if (aVal > bVal) return 1;
+  }
+  
+  return 0;
+}
+
+/**
  * Pick highest stable (semver) from a flat array
  */
 function findLatestStable(
@@ -172,8 +205,10 @@ function findLatestStable(
     dependencyGroups?: Array<{ targetFramework?: string }>;
   }>,
 ) {
-  // reverse sort by semver (simple lexicographical works for NuGet numbering)
-  const sorted = entries.filter((e) => isStableVersion(e.version)).sort((a, b) => (a.version > b.version ? -1 : 1));
+  // Filter stable versions and sort by proper semantic version comparison
+  const sorted = entries
+    .filter((e) => isStableVersion(e.version))
+    .sort((a, b) => compareSemanticVersions(b.version, a.version)); // descending order
 
   return sorted.length > 0 ? sorted[0] : null;
 }
@@ -198,7 +233,7 @@ async function fetchFrameworksFromNuspec(packageName: string, version: string): 
  */
 function isSupportedFramework(targetFrameworks: string[]): boolean {
   return targetFrameworks.some(
-    (tf) => tf.includes('net10.0') || tf.includes('net9.0') || tf.includes('net8.0') || tf.includes('netstandard2.0'),
+    (tf) => tf.includes('net10.0') || tf.includes('net9.0') || tf.includes('net8.0') || tf.includes('netstandard2.0') || tf.includes('.NETStandard2.0'),
   );
 }
 
