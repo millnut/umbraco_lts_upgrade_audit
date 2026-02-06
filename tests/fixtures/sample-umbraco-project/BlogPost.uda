@@ -1,0 +1,58 @@
+{
+  "Name": "Blog Post",
+  "Alias": "blogPost",
+  "AllowedTemplates": ["blogPost"],
+  "HistoryCleanup": {},
+  "Icon": "icon-document",
+  "Thumbnail": "folder.png",
+  "Permissions": {
+    "AllowedChildContentTypes": []
+  },
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Name": "Content",
+      "Alias": "content",
+      "PropertyTypes": [
+        {
+          "Alias": "mainImage",
+          "Name": "Main Image",
+          "Description": "Featured image for the blog post",
+          "DataType": "Umbraco.MediaPicker",
+          "Validation": "",
+          "SortOrder": 1
+        },
+        {
+          "Alias": "contentBlocks",
+          "Name": "Content Blocks",
+          "Description": "Page content sections",
+          "DataType": "Nested Content",
+          "Validation": "",
+          "SortOrder": 2
+        },
+        {
+          "Alias": "gallery",
+          "Name": "Gallery",
+          "Description": "Image gallery",
+          "DataType": "Umbraco.MediaPicker3",
+          "Validation": "",
+          "SortOrder": 3
+        }
+      ]
+    },
+    {
+      "Name": "Sidebar",
+      "Alias": "sidebar",
+      "PropertyTypes": [
+        {
+          "Alias": "widgets",
+          "Name": "Sidebar Widgets",
+          "Description": "Sidebar content",
+          "DataType": "Stacked Content",
+          "Validation": "",
+          "SortOrder": 1
+        }
+      ]
+    }
+  ]
+}

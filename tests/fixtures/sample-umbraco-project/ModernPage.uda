@@ -1,0 +1,36 @@
+{
+  "Name": "Modern Page",
+  "Alias": "modernPage",
+  "AllowedTemplates": ["modernPage"],
+  "HistoryCleanup": {},
+  "Icon": "icon-document",
+  "Thumbnail": "folder.png",
+  "Permissions": {
+    "AllowedChildContentTypes": []
+  },
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Name": "Content",
+      "Alias": "content",
+      "PropertyTypes": [
+        {
+          "Alias": "heroImage",
+          "Name": "Hero Image",
+          "Description": "Hero image using modern picker",
+          "DataType": "Umbraco.MediaPicker3",
+          "Validation": "",
+          "SortOrder": 1
+        },
+        {
+          "Alias": "contentBlocks",
+          "Name": "Content Blocks",
+          "Description": "Modern block list editor",
+          "DataType": "Umbraco.BlockList",
+          "Validation": "",
+          "SortOrder": 2
+        }
+      ]
+    }
+  ]
+}
