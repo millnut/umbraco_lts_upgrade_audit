@@ -169,7 +169,7 @@ function extractEntriesFromInlineItems(items: any[]): Array<{
 function parseSemanticVersion(version: string): number[] {
   const parts = version.split('.').map((p) => {
     const num = parseInt(p, 10);
-    return isNaN(num) ? 0 : num;
+    return Number.isNaN(num) ? 0 : num;
   });
   // Ensure we have at least [major, minor, patch]
   while (parts.length < 3) parts.push(0);
@@ -182,17 +182,17 @@ function parseSemanticVersion(version: string): number[] {
 function compareSemanticVersions(a: string, b: string): number {
   const aParts = parseSemanticVersion(a);
   const bParts = parseSemanticVersion(b);
-  
+
   const maxLength = Math.max(aParts.length, bParts.length);
-  
+
   for (let i = 0; i < maxLength; i++) {
     const aVal = aParts[i] ?? 0;
     const bVal = bParts[i] ?? 0;
-    
+
     if (aVal < bVal) return -1;
     if (aVal > bVal) return 1;
   }
-  
+
   return 0;
 }
 
@@ -233,7 +233,12 @@ async function fetchFrameworksFromNuspec(packageName: string, version: string): 
  */
 function isSupportedFramework(targetFrameworks: string[]): boolean {
   return targetFrameworks.some(
-    (tf) => tf.includes('net10.0') || tf.includes('net9.0') || tf.includes('net8.0') || tf.includes('netstandard2.0') || tf.includes('.NETStandard2.0'),
+    (tf) =>
+      tf.includes('net10.0') ||
+      tf.includes('net9.0') ||
+      tf.includes('net8.0') ||
+      tf.includes('netstandard2.0') ||
+      tf.includes('.NETStandard2.0'),
   );
 }
 

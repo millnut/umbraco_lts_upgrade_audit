@@ -92,7 +92,7 @@ export const rule01NuGetPackages: Rule = {
       // Determine if update is needed (simple version comparison)
       const needsUpdate = currentVersion !== latestVersion;
 
-      if ((nugetData.isCompatible === false || nugetData.isCompatible === null)) {
+      if (nugetData.isCompatible === false || nugetData.isCompatible === null) {
         warn(`Unable to determine compatibility with .NET 10 or Umbraco v17: ${packageName}`);
       }
 

@@ -89,9 +89,9 @@ export async function executeAuditCommand(projectPath: string, options: AuditCom
 
   for (const projectFile of projectFiles) {
     const packages = await parseProjectFile(projectFile);
-    
+
     // Check if this project file contains Umbraco.Cms
-    if (packages.some(pkg => pkg.name === 'Umbraco.Cms')) {
+    if (packages.some((pkg) => pkg.name === 'Umbraco.Cms')) {
       umbracoVersion = extractUmbracoVersion(packages);
       umbracoProjectFile = projectFile;
       debug(`Found Umbraco.Cms in: ${projectFile}`);
