@@ -67,7 +67,7 @@ src/
 │   ├── index.ts         # Rule registry and executor
 │   ├── types.ts         # Rule interface definitions
 │   ├── rule-01-nuget-packages.ts
-│   ├── rule-02-removed-extensions.ts
+│   ├── rule-02-obsolete-controller-classes.ts
 │   ├── rule-03-tiptap-import.ts
 │   ├── rule-04-removed-packages.ts
 │   ├── rule-05-program-cs.ts
@@ -108,7 +108,7 @@ tests/
 | Rule | Name | Detection Method | Default Hours |
 |------|------|------------------|---------------|
 | 1 | NuGet Package Updates | Parse .csproj, query NuGet API for latest versions compatible with Umbraco 17/.NET 10 | 0.5h for minor/patch updates, 1.0h for major version bumps |
-| 2 | Removed Extension Methods | Grep for 17 specific method names in .cs files | 1h per occurrence |
+| 2 | Obsolete Controller Classes | Grep for 3 controller classes that no longer exist in .cs files | 1h per file |
 | 3 | Tiptap Import Change | Search for `@umbraco-cms/backoffice/external/tiptap` in .ts/.js files | 0.5h per file |
 | 4 | Removed Packages | Detect 3 specific packages in .csproj that must be removed | 0.5h per package found |
 | 5 | Program.cs Changes | Detect `UseInstallerEndpoints()` in Program.cs | 0.5h fixed |

@@ -78,7 +78,7 @@
 
 - [X] T021 [US1] Implement NuGet API client with caching in src/scanners/nuget-client.ts
 - [X] T022 [US1] Implement Rule 1: NuGet Package Updates in src/rules/rule-01-nuget-packages.ts
-- [X] T023 [P] [US1] Implement Rule 2: Removed Extension Methods (14 methods) in src/rules/rule-02-removed-extensions.ts
+- [X] T023 [P] [US1] Implement Rule 2: Obsolete Controller Classes (3 classes) in src/rules/rule-02-removed-extensions.ts
 - [X] T024 [P] [US1] Implement Rule 3: Tiptap Import Change in src/rules/rule-03-tiptap-import.ts
 - [X] T025 [P] [US1] Implement Rule 4: Removed Packages (3 packages) in src/rules/rule-04-removed-packages.ts
 - [X] T026 [P] [US1] Implement Rule 5: Program.cs UseInstallerEndpoints in src/rules/rule-05-program-cs.ts
@@ -101,7 +101,7 @@
 **Purpose**: Each rule MUST have unit tests per constitution principle II
 
 - [ ] T035a [P] Write unit tests for Rule 1 (NuGet packages) in tests/unit/rules/rule-01.test.ts
-- [ ] T035b [P] Write unit tests for Rule 2 (removed extensions) in tests/unit/rules/rule-02.test.ts
+- [ ] T035b [P] Write unit tests for Rule 2 (obsolete controllers) in tests/unit/rules/rule-02.test.ts
 - [ ] T035c [P] Write unit tests for Rule 3 (Tiptap import) in tests/unit/rules/rule-03.test.ts
 - [ ] T035d [P] Write unit tests for Rule 4 (removed packages) in tests/unit/rules/rule-04.test.ts
 - [ ] T035e [P] Write unit tests for Rule 5 (Program.cs) in tests/unit/rules/rule-05.test.ts

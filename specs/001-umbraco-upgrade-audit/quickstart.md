@@ -132,7 +132,7 @@ excludePaths:
 │ Rule                             │   Matches  │     Hours          │
 ├──────────────────────────────────┼────────────┼────────────────────┤
 │ NuGet Package Updates            │         12 │              6.0   │
-│ Removed Extension Methods        │          3 │              3.0   │
+│ Obsolete Controller Classes      │          2 │              2.0   │
 │ Tiptap Import Changes            │          2 │              1.0   │
 │ Removed Packages                 │          1 │              0.5   │
 │ Program.cs Changes               │          1 │              0.5   │

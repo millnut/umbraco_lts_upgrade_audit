@@ -48,7 +48,7 @@ The tool applies 7 rules to detect upgrade-relevant changes:
 | Rule | Detection | Base Hours |
 |------|-----------|------------|
 | **NuGet Package Updates** | Checks package versions against NuGet API | 0.5h for minor/patch, 1.0h for major version bumps |
-| **Removed Extension Methods** | Detects 17 removed extension methods | 1.0h per occurrence |
+| **Obsolete Controller Classes** | Detects 3 controller classes that no longer exist | 1.0h per file |
 | **Tiptap Import Changes** | Finds Tiptap imports needing updates | 0.5h per file |
 | **Removed Packages** | Detects 3 packages removed in v17 | 0.5h per package |
 | **Program.cs Changes** | Finds `UseInstallerEndpoints()` calls | 0.5h fixed |
@@ -73,7 +73,7 @@ The tool applies 7 rules to detect upgrade-relevant changes:
 │   └─ Umbraco.* packages                          │ 5          │ 2.5        │
 │   └─ Other packages                              │ 7          │ 3.5        │
 ├──────────────────────────────────────────────────┼────────────┼────────────┤
-│ Removed Extension Methods                        │ 3          │ 3.0        │
+│ Obsolete Controller Classes                      │ 2          │ 2.0        │
 ├──────────────────────────────────────────────────┼────────────┼────────────┤
 │ Tiptap Import Changes                            │ 2          │ 1.0        │
 ├──────────────────────────────────────────────────┼────────────┼────────────┤

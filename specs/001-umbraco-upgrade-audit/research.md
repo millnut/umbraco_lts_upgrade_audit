@@ -152,7 +152,7 @@ umbraco-audit <path>
 | Rule | Base Hours | Scaling |
 |------|------------|---------|
 | Rule 1 - Package Update | 0.5h minor, 1.0h major | Per package needing update (major version bumps take longer) |
-| Rule 2 - Removed Methods | 1.0h | Per occurrence (requires code change) |
+| Rule 2 - Obsolete Controllers | 1.0h | Per file (requires class refactoring) |
 | Rule 3 - Tiptap Import | 0.5h | Per file with import |
 | Rule 4 - Removed Packages | 0.5h | Per package to remove |
 | Rule 5 - Program.cs | 0.5h | Fixed (single file) |

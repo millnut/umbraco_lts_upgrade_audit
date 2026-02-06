@@ -13,7 +13,7 @@ import { hoursToDays } from '../../utils/hours.js';
 
 // Import all rules
 import { rule01NuGetPackages } from '../../rules/rule-01-nuget-packages.js';
-import { rule02RemovedExtensions } from '../../rules/rule-02-removed-extensions.js';
+import { rule02ObsoleteControllers } from '../../rules/rule-02-obsolete-controller-classes.js';
 import { rule03TiptapImport } from '../../rules/rule-03-tiptap-import.js';
 import { rule04RemovedPackages } from '../../rules/rule-04-removed-packages.js';
 import { rule05ProgramCs } from '../../rules/rule-05-program-cs.js';
@@ -62,7 +62,7 @@ export async function executeAuditCommand(
 
   // Register all rules
   registerRule(rule01NuGetPackages);
-  registerRule(rule02RemovedExtensions);
+  registerRule(rule02ObsoleteControllers);
   registerRule(rule03TiptapImport);
   registerRule(rule04RemovedPackages);
   registerRule(rule05ProgramCs);
