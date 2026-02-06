@@ -1,10 +1,10 @@
 import type { AuditReport } from '../../../models/report.js';
-import { getUmbracoLogo, getH5YRFooter } from '../ascii-logo.js';
+import { getH5YRFooter, getUmbracoLogo } from '../ascii-logo.js';
 import { renderResultsTable } from '../table-renderer.js';
 
 /**
  * Console formatter with logo, table, and totals
- * 
+ *
  * Output format:
  * 1. Umbraco ASCII logo in brand blue
  * 2. Results table

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 /**
  * Zod schemas for CLI args and config validation
- * 
+ *
  * Why: Constitution principle I (Code Quality) requires explicit error handling.
  * Zod provides runtime validation with clear error messages.
  */

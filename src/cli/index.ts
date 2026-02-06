@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { executeAuditCommand } from './commands/audit.js';
 import type { AuditCommandOptions } from './commands/audit.js';
+import { executeAuditCommand } from './commands/audit.js';
 
 /**
  * CLI entry point
- * 
+ *
  * Implements Commander-based CLI with audit command and options
  */
 

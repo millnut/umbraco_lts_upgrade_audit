@@ -1,10 +1,10 @@
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 import type { CodeSnippet } from '../rules/types.js';
 import { debug } from '../utils/logger.js';
 
 /**
  * Code search and pattern matching utilities
- * 
+ *
  * Why: Rules need to find specific patterns in source files.
  * Line-by-line regex matching provides accurate line numbers.
  */
@@ -20,7 +20,7 @@ export interface SearchMatch {
 
 /**
  * Search for a pattern in a file
- * 
+ *
  * @param filePath - File to search
  * @param pattern - Regex pattern or string to find
  * @param caseSensitive - Whether search is case-sensitive
@@ -29,7 +29,7 @@ export interface SearchMatch {
 export async function searchInFile(
   filePath: string,
   pattern: string | RegExp,
-  caseSensitive = true
+  caseSensitive = true,
 ): Promise<SearchMatch[]> {
   debug(`Searching in file: ${filePath}`);
   debug(`Pattern: ${pattern}`);
@@ -38,10 +38,7 @@ export async function searchInFile(
   const lines = content.split('\n');
   const matches: SearchMatch[] = [];
 
-  const regex =
-    typeof pattern === 'string'
-      ? new RegExp(pattern, caseSensitive ? 'g' : 'gi')
-      : pattern;
+  const regex = typeof pattern === 'string' ? new RegExp(pattern, caseSensitive ? 'g' : 'gi') : pattern;
 
   lines.forEach((line, index) => {
     if (regex.test(line)) {
@@ -61,17 +58,13 @@ export async function searchInFile(
 
 /**
  * Extract code snippet with surrounding context
- * 
+ *
  * @param filePath - File to extract from
  * @param lineNumber - Center line (1-based)
  * @param contextLines - Number of lines before/after
  * @returns Code snippet with context
  */
-export async function extractCodeSnippet(
-  filePath: string,
-  lineNumber: number,
-  contextLines = 3
-): Promise<CodeSnippet> {
+export async function extractCodeSnippet(filePath: string, lineNumber: number, contextLines = 3): Promise<CodeSnippet> {
   const content = await readFile(filePath, 'utf-8');
   const lines = content.split('\n');
 
@@ -96,7 +89,7 @@ export async function extractCodeSnippet(
 
 /**
  * Search for multiple patterns in a file (OR logic)
- * 
+ *
  * @param filePath - File to search
  * @param patterns - Array of patterns
  * @param caseSensitive - Whether search is case-sensitive
@@ -105,7 +98,7 @@ export async function extractCodeSnippet(
 export async function searchMultiplePatterns(
   filePath: string,
   patterns: Array<string | RegExp>,
-  caseSensitive = true
+  caseSensitive = true,
 ): Promise<SearchMatch[]> {
   const allMatches: SearchMatch[] = [];
 
@@ -115,9 +108,7 @@ export async function searchMultiplePatterns(
   }
 
   // Remove duplicates based on line number
-  const uniqueMatches = Array.from(
-    new Map(allMatches.map((m) => [m.lineNumber, m])).values()
-  );
+  const uniqueMatches = Array.from(new Map(allMatches.map((m) => [m.lineNumber, m])).values());
 
   return uniqueMatches.sort((a, b) => a.lineNumber - b.lineNumber);
 }

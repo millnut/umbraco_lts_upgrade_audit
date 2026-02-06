@@ -1,16 +1,16 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { scanFiles } from '../scanners/file-scanner.js';
-import { searchInFile } from '../scanners/code-searcher.js';
 import { createFinding } from '../models/finding.js';
+import { searchInFile } from '../scanners/code-searcher.js';
+import { scanFiles } from '../scanners/file-scanner.js';
 import { calculateHours } from '../utils/hours.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 3: Tiptap Import Change
- * 
+ *
  * Detects import of '@umbraco-cms/backoffice/external/tiptap' which has changed
  * in Umbraco 17's new backoffice architecture.
- * 
+ *
  * Hours: 0.5h per file with import
  */
 
@@ -53,7 +53,7 @@ export const rule03TiptapImport: Rule = {
           'warning',
           {
             importCount: matches.length,
-          }
+          },
         );
 
         findings.push(finding);

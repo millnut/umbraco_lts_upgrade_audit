@@ -1,17 +1,17 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { findProjectFiles } from '../scanners/file-scanner.js';
-import { parseProjectFile, isUmbracoPackage } from '../scanners/csproj-parser.js';
-import { batchQueryPackages } from '../scanners/nuget-client.js';
 import { createFinding } from '../models/finding.js';
+import { isUmbracoPackage, parseProjectFile } from '../scanners/csproj-parser.js';
+import { findProjectFiles } from '../scanners/file-scanner.js';
+import { batchQueryPackages } from '../scanners/nuget-client.js';
 import { calculateHours } from '../utils/hours.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 1: NuGet Package Updates
- * 
+ *
  * Detects packages that need updating for Umbraco 17 / .NET 10 compatibility.
  * Queries NuGet API to determine latest versions and compatibility.
- * 
+ *
  * Hours: 1h for major version bumps, 0.5h for minor/patch updates
  */
 
@@ -39,8 +39,7 @@ function isMajorVersionBump(currentVersion: string, latestVersion: string): bool
 export const rule01NuGetPackages: Rule = {
   id: RULE_ID,
   name: 'NuGet Package Updates',
-  description:
-    'Detects NuGet packages that need updating for Umbraco 17 and .NET 10 compatibility',
+  description: 'Detects NuGet packages that need updating for Umbraco 17 and .NET 10 compatibility',
   category: 'package-updates',
   baseHours: BASE_HOURS_MINOR, // Default for reporting, actual hours calculated per package
   enabled: true,
@@ -116,7 +115,7 @@ export const rule01NuGetPackages: Rule = {
           `${packageName}: ${currentVersion} → ${latestVersion}`,
           hours,
           'warning',
-          metadata
+          metadata,
         );
 
         findings.push(finding);

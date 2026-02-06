@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { resolve } from 'node:path';
+import process from 'node:process';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { rule10LicenseFiles } from '../../../src/rules/rule-10-license-files.js';
 import type { RuleContext } from '../../../src/rules/types.js';
-import { resolve } from 'path';
-import process from 'process';
 
 describe('Rule 10: License File Structure Changes', () => {
   const testFixturesPath = resolve(process.cwd(), 'tests/fixtures/sample-umbraco-project');

@@ -2,7 +2,7 @@ import type { AuditReport } from '../../../models/report.js';
 
 /**
  * HTML formatter
- * 
+ *
  * Generates a standalone HTML report with embedded styles.
  * Suitable for sharing with stakeholders or archiving.
  */
@@ -174,10 +174,10 @@ export function formatHtmlOutput(report: AuditReport): string {
           // Add sub-rows for Rule 1 (NuGet packages)
           if (ruleResult.ruleId === 'rule-01-nuget-packages') {
             const umbracoPackages = report.findings.filter(
-              (f) => f.ruleId === 'rule-01-nuget-packages' && f.metadata?.isUmbracoPackage === true
+              (f) => f.ruleId === 'rule-01-nuget-packages' && f.metadata?.isUmbracoPackage === true,
             );
             const otherPackages = report.findings.filter(
-              (f) => f.ruleId === 'rule-01-nuget-packages' && f.metadata?.isUmbracoPackage === false
+              (f) => f.ruleId === 'rule-01-nuget-packages' && f.metadata?.isUmbracoPackage === false,
             );
 
             if (umbracoPackages.length > 0) {

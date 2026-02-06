@@ -1,8 +1,8 @@
-import type { Finding, FindingSeverity, CodeSnippet } from '../rules/types.js';
+import type { CodeSnippet, Finding, FindingSeverity } from '../rules/types.js';
 
 /**
  * Creates a new Finding instance
- * 
+ *
  * @param ruleId - Rule identifier that generated this finding
  * @param filePath - Absolute path to the file
  * @param lineNumber - Line number (1-based)
@@ -19,7 +19,7 @@ export function createFinding(
   lineContent: string,
   hours: number,
   severity: FindingSeverity = 'warning',
-  metadata?: Record<string, unknown>
+  metadata?: Record<string, unknown>,
 ): Finding {
   return {
     ruleId,
@@ -34,7 +34,7 @@ export function createFinding(
 
 /**
  * Adds a code snippet to a finding
- * 
+ *
  * @param finding - Finding to augment
  * @param codeSnippet - Code snippet with context
  * @returns Finding with code snippet

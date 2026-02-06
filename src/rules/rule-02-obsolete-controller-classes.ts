@@ -1,16 +1,16 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { findCSharpFiles } from '../scanners/file-scanner.js';
-import { searchMultiplePatterns } from '../scanners/code-searcher.js';
 import { createFinding } from '../models/finding.js';
+import { searchMultiplePatterns } from '../scanners/code-searcher.js';
+import { findCSharpFiles } from '../scanners/file-scanner.js';
 import { calculateHours } from '../utils/hours.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 2: Obsolete Controller Classes
- * 
+ *
  * Detects 3 controller base classes that no longer exist in Umbraco 17.
  * These classes require updating to use new controller base classes.
- * 
+ *
  * Hours: 1.0h per file (requires class refactoring)
  */
 
@@ -20,18 +20,12 @@ const BASE_HOURS = 1.0;
 /**
  * List of obsolete controller classes
  */
-const OBSOLETE_CLASSES = [
-  'UmbracoApiController',
-  'UmbracoAuthorizedApiController',
-  'UmbracoAuthorizedJsonController',
-];
+const OBSOLETE_CLASSES = ['UmbracoApiController', 'UmbracoAuthorizedApiController', 'UmbracoAuthorizedJsonController'];
 
 /**
  * Build regex patterns to match class usage (inheritance, type references)
  */
-const PATTERNS = OBSOLETE_CLASSES.map(
-  (className) => new RegExp(`\\b${className}\\b`, 'g')
-);
+const PATTERNS = OBSOLETE_CLASSES.map((className) => new RegExp(`\\b${className}\\b`, 'g'));
 
 export const rule02ObsoleteControllers: Rule = {
   id: RULE_ID,
@@ -59,7 +53,7 @@ export const rule02ObsoleteControllers: Rule = {
       if (matches.length > 0) {
         const firstMatch = matches[0];
         const className = extractClassName(firstMatch.lineContent);
-        
+
         filesWithObsoleteClasses.set(filePath, {
           lineNumber: firstMatch.lineNumber,
           lineContent: firstMatch.lineContent,
@@ -72,17 +66,9 @@ export const rule02ObsoleteControllers: Rule = {
     for (const [filePath, matchInfo] of filesWithObsoleteClasses) {
       const hours = calculateHours(BASE_HOURS, 1);
 
-      const finding = createFinding(
-        RULE_ID,
-        filePath,
-        matchInfo.lineNumber,
-        matchInfo.lineContent,
-        hours,
-        'error',
-        {
-          className: matchInfo.className,
-        }
-      );
+      const finding = createFinding(RULE_ID, filePath, matchInfo.lineNumber, matchInfo.lineContent, hours, 'error', {
+        className: matchInfo.className,
+      });
 
       findings.push(finding);
     }
@@ -96,6 +82,8 @@ export const rule02ObsoleteControllers: Rule = {
  * Extract class name from line content
  */
 function extractClassName(lineContent: string): string | null {
-  const match = lineContent.match(/\b(UmbracoApiController|UmbracoAuthorizedApiController|UmbracoAuthorizedJsonController)\b/);
+  const match = lineContent.match(
+    /\b(UmbracoApiController|UmbracoAuthorizedApiController|UmbracoAuthorizedJsonController)\b/,
+  );
   return match ? match[1] : null;
 }

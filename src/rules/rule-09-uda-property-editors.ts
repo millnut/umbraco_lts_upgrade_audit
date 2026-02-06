@@ -1,21 +1,21 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { scanFiles } from '../scanners/file-scanner.js';
+import { readFile } from 'node:fs/promises';
 import { createFinding } from '../models/finding.js';
+import { scanFiles } from '../scanners/file-scanner.js';
 import { calculateHours } from '../utils/hours.js';
 import { debug } from '../utils/logger.js';
-import { readFile } from 'fs/promises';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 9: Outdated Property Editors in UDA Files
- * 
+ *
  * Detects obsolete property editors in Umbraco Document Type (*.uda) files
  * that need migration in Umbraco 17.
- * 
+ *
  * Detects:
  * - "Umbraco.MediaPicker" (v1/v2, replaced by MediaPicker3)
  * - "Nested Content" (replaced by Block List)
  * - "Stacked Content" (replaced by Block List)
- * 
+ *
  * Hours: 1h per occurrence
  */
 
@@ -83,7 +83,7 @@ export const rule09UdaPropertyEditors: Rule = {
               {
                 outdatedEditor: editor.name,
                 recommendedReplacement: editor.replacement,
-              }
+              },
             );
 
             findings.push(finding);

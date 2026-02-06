@@ -1,4 +1,4 @@
-import type { RuleCategory, Finding } from '../rules/types.js';
+import type { Finding, RuleCategory } from '../rules/types.js';
 
 /**
  * Project information extracted during scanning

@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { resolve } from 'node:path';
+import process from 'node:process';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { rule09UdaPropertyEditors } from '../../../src/rules/rule-09-uda-property-editors.js';
 import type { RuleContext } from '../../../src/rules/types.js';
-import { resolve } from 'path';
-import process from 'process';
 
 describe('Rule 09: UDA Property Editors', () => {
   const testFixturesPath = resolve(process.cwd(), 'tests/fixtures/sample-umbraco-project');
@@ -30,9 +30,7 @@ describe('Rule 09: UDA Property Editors', () => {
   it('should detect Umbraco.MediaPicker in .uda files', async () => {
     const findings = await rule09UdaPropertyEditors.execute(context);
 
-    const mediaPickerFindings = findings.filter((f) =>
-      f.lineContent.includes('"Umbraco.MediaPicker"')
-    );
+    const mediaPickerFindings = findings.filter((f) => f.lineContent.includes('"Umbraco.MediaPicker"'));
 
     expect(mediaPickerFindings.length).toBeGreaterThan(0);
     expect(mediaPickerFindings[0].ruleId).toBe('rule-09-uda-property-editors');
@@ -46,9 +44,7 @@ describe('Rule 09: UDA Property Editors', () => {
     const findings = await rule09UdaPropertyEditors.execute(context);
 
     // Should not match MediaPicker3
-    const mediaPickerFindings = findings.filter((f) =>
-      f.lineContent.includes('"Umbraco.MediaPicker"')
-    );
+    const mediaPickerFindings = findings.filter((f) => f.lineContent.includes('"Umbraco.MediaPicker"'));
 
     // Verify none of the findings are for MediaPicker3
     mediaPickerFindings.forEach((finding) => {
@@ -59,9 +55,7 @@ describe('Rule 09: UDA Property Editors', () => {
   it('should detect Nested Content in .uda files', async () => {
     const findings = await rule09UdaPropertyEditors.execute(context);
 
-    const nestedContentFindings = findings.filter((f) =>
-      f.lineContent.includes('"Nested Content"')
-    );
+    const nestedContentFindings = findings.filter((f) => f.lineContent.includes('"Nested Content"'));
 
     expect(nestedContentFindings.length).toBeGreaterThan(0);
     expect(nestedContentFindings[0].ruleId).toBe('rule-09-uda-property-editors');
@@ -74,9 +68,7 @@ describe('Rule 09: UDA Property Editors', () => {
   it('should detect Stacked Content in .uda files', async () => {
     const findings = await rule09UdaPropertyEditors.execute(context);
 
-    const stackedContentFindings = findings.filter((f) =>
-      f.lineContent.includes('"Stacked Content"')
-    );
+    const stackedContentFindings = findings.filter((f) => f.lineContent.includes('"Stacked Content"'));
 
     expect(stackedContentFindings.length).toBeGreaterThan(0);
     expect(stackedContentFindings[0].ruleId).toBe('rule-09-uda-property-editors');

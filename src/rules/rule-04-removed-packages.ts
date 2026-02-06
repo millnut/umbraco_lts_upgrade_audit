@@ -1,15 +1,15 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { findProjectFiles } from '../scanners/file-scanner.js';
-import { parseProjectFile } from '../scanners/csproj-parser.js';
 import { createFinding } from '../models/finding.js';
+import { parseProjectFile } from '../scanners/csproj-parser.js';
+import { findProjectFiles } from '../scanners/file-scanner.js';
 import { calculateHours } from '../utils/hours.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 4: Removed Packages
- * 
+ *
  * Detects 3 packages that have been removed in Umbraco 17 and must be uninstalled.
- * 
+ *
  * Hours: 0.5h per package found
  */
 
@@ -19,11 +19,7 @@ const BASE_HOURS = 0.5;
 /**
  * List of removed packages from research.md
  */
-const REMOVED_PACKAGES = [
-  'Umbraco.Cloud.Cms.PublicAccess',
-  'Umbraco.Cloud.Identity.Cms',
-  'Umbraco.Cms.Web.BackOffice',
-];
+const REMOVED_PACKAGES = ['Umbraco.Cloud.Cms.PublicAccess', 'Umbraco.Cloud.Identity.Cms', 'Umbraco.Cms.Web.BackOffice'];
 
 export const rule04RemovedPackages: Rule = {
   id: RULE_ID,
@@ -60,7 +56,7 @@ export const rule04RemovedPackages: Rule = {
               packageName: pkg.name,
               version: pkg.version,
               reason: 'Package removed or functionality merged into core',
-            }
+            },
           );
 
           findings.push(finding);

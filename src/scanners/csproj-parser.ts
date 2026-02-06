@@ -1,10 +1,10 @@
+import { readFile } from 'node:fs/promises';
 import { XMLParser } from 'fast-xml-parser';
-import { readFile } from 'fs/promises';
 import { debug } from '../utils/logger.js';
 
 /**
  * .csproj XML parsing utilities
- * 
+ *
  * Why: NuGet package references are in XML format.
  * fast-xml-parser handles .NET XML quirks reliably.
  */
@@ -19,7 +19,7 @@ export interface PackageReference {
 
 /**
  * Parse .csproj file and extract package references
- * 
+ *
  * @param csprojPath - Absolute path to .csproj file
  * @returns Array of package references
  */
@@ -70,7 +70,7 @@ export async function parseProjectFile(csprojPath: string): Promise<PackageRefer
 
 /**
  * Check if a package name matches Umbraco packages
- * 
+ *
  * @param packageName - Package name to check
  * @returns True if it's an Umbraco package
  */
@@ -80,7 +80,7 @@ export function isUmbracoPackage(packageName: string): boolean {
 
 /**
  * Extract Umbraco version from package references
- * 
+ *
  * @param packages - List of package references
  * @returns Umbraco version string or null
  */

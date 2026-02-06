@@ -1,27 +1,23 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { findRazorFiles } from '../scanners/file-scanner.js';
-import { searchMultiplePatterns } from '../scanners/code-searcher.js';
 import { createFinding } from '../models/finding.js';
+import { searchMultiplePatterns } from '../scanners/code-searcher.js';
+import { findRazorFiles } from '../scanners/file-scanner.js';
 import { calculateHours } from '../utils/hours.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 6: ViewImports Smidge Removal
- * 
+ *
  * Detects Smidge TagHelper references in _ViewImports.cshtml which need removal
  * in Umbraco 17 (asset bundling changed).
- * 
+ *
  * Hours: 0.5h fixed (configuration change)
  */
 
 const RULE_ID = 'rule-06-view-imports';
 const BASE_HOURS = 0.5;
 
-const SMIDGE_PATTERNS = [
-  'Smidge',
-  '@addTagHelper *, Smidge',
-  '@inject Smidge',
-];
+const SMIDGE_PATTERNS = ['Smidge', '@addTagHelper *, Smidge', '@inject Smidge'];
 
 export const rule06ViewImports: Rule = {
   id: RULE_ID,
@@ -60,7 +56,7 @@ export const rule06ViewImports: Rule = {
           'warning',
           {
             matchCount: matches.length,
-          }
+          },
         );
 
         findings.push(finding);

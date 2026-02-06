@@ -20,9 +20,7 @@ export function clearPackageCache(): void {
   packageCache.clear();
 }
 
-export async function queryNuGetPackage(
-  packageName: string
-): Promise<NuGetPackageMetadata | null> {
+export async function queryNuGetPackage(packageName: string): Promise<NuGetPackageMetadata | null> {
   if (packageCache.has(packageName)) {
     debug(`Cache hit for package: ${packageName}`);
     return packageCache.get(packageName)!;
@@ -47,23 +45,14 @@ export async function queryNuGetPackage(
 
     const { version: latestVersion, dependencyGroups } = latestEntry;
 
-    let targetFrameworks =
-      dependencyGroups
-        ?.map(g => g.targetFramework)
-        .filter((f): f is string => !!f) ?? [];
+    let targetFrameworks = dependencyGroups?.map((g) => g.targetFramework).filter((f): f is string => !!f) ?? [];
 
     if (targetFrameworks.length === 0) {
       debug(`Falling back to nuspec for ${packageName}@${latestVersion}`);
-      targetFrameworks = await fetchFrameworksFromNuspec(
-        packageName,
-        latestVersion
-      );
+      targetFrameworks = await fetchFrameworksFromNuspec(packageName, latestVersion);
     }
 
-    const isCompatible =
-      targetFrameworks.length === 0
-        ? null
-        : isSupportedFramework(targetFrameworks);
+    const isCompatible = targetFrameworks.length === 0 ? null : isSupportedFramework(targetFrameworks);
 
     const metadata: NuGetPackageMetadata = {
       packageName,
@@ -98,14 +87,11 @@ export async function queryNuGetPackage(
  *  • index with inline items
  *  • index pointing to page URLs
  */
-async function fetchLatestStableEntry(
-  packageName: string
-): Promise<{
+async function fetchLatestStableEntry(packageName: string): Promise<{
   version: string;
   dependencyGroups?: Array<{ targetFramework?: string }>;
 } | null> {
-  const indexUrl =
-    `https://api.nuget.org/v3/registration5-gz-semver2/${packageName.toLowerCase()}/index.json`;
+  const indexUrl = `https://api.nuget.org/v3/registration5-gz-semver2/${packageName.toLowerCase()}/index.json`;
 
   const indexResponse = await fetch(indexUrl);
   if (indexResponse.status === 404) return null;
@@ -113,7 +99,7 @@ async function fetchLatestStableEntry(
     throw new Error(`NuGet API error: ${indexResponse.status}`);
   }
 
-  const index = await indexResponse.json() as any;
+  const index = (await indexResponse.json()) as any;
 
   // Try to extract entries from inline items first
   if (Array.isArray(index.items) && index.items.length > 0) {
@@ -127,11 +113,11 @@ async function fetchLatestStableEntry(
   for (let p = pages.length - 1; p >= 0; p--) {
     const pageUrl = pages[p]['@id'];
     if (!pageUrl) continue;
-    
+
     const pageResponse = await fetch(pageUrl);
     if (!pageResponse.ok) continue;
 
-    const page = await pageResponse.json() as any;
+    const page = (await pageResponse.json()) as any;
     if (Array.isArray(page.items)) {
       const entries = extractEntriesFromInlineItems(page.items);
       const stable = findLatestStable(entries);
@@ -184,12 +170,10 @@ function findLatestStable(
   entries: Array<{
     version: string;
     dependencyGroups?: Array<{ targetFramework?: string }>;
-  }>
+  }>,
 ) {
   // reverse sort by semver (simple lexicographical works for NuGet numbering)
-  const sorted = entries
-    .filter(e => isStableVersion(e.version))
-    .sort((a, b) => (a.version > b.version ? -1 : 1));
+  const sorted = entries.filter((e) => isStableVersion(e.version)).sort((a, b) => (a.version > b.version ? -1 : 1));
 
   return sorted.length > 0 ? sorted[0] : null;
 }
@@ -197,33 +181,24 @@ function findLatestStable(
 /**
  * Extract frameworks from .nuspec (source of truth fallback)
  */
-async function fetchFrameworksFromNuspec(
-  packageName: string,
-  version: string
-): Promise<string[]> {
+async function fetchFrameworksFromNuspec(packageName: string, version: string): Promise<string[]> {
   const id = packageName.toLowerCase();
-  const url =
-    `https://api.nuget.org/v3-flatcontainer/${id}/${version}/${id}.nuspec`;
+  const url = `https://api.nuget.org/v3-flatcontainer/${id}/${version}/${id}.nuspec`;
 
   const response = await fetch(url);
   if (!response.ok) return [];
 
   const xml = await response.text();
 
-  return Array.from(
-    xml.matchAll(/<group\s+targetFramework="([^"]+)"/gi)
-  ).map(match => match[1]);
+  return Array.from(xml.matchAll(/<group\s+targetFramework="([^"]+)"/gi)).map((match) => match[1]);
 }
 
 /**
  * Compatibility rule
  */
 function isSupportedFramework(targetFrameworks: string[]): boolean {
-  return targetFrameworks.some(tf =>
-    tf.includes('net10.0') ||
-    tf.includes('net9.0') ||
-    tf.includes('net8.0') ||
-    tf.includes('netstandard2.0')
+  return targetFrameworks.some(
+    (tf) => tf.includes('net10.0') || tf.includes('net9.0') || tf.includes('net8.0') || tf.includes('netstandard2.0'),
   );
 }
 
@@ -238,16 +213,14 @@ function isStableVersion(version: string): boolean {
 /**
  * Batch helper
  */
-export async function batchQueryPackages(
-  packageNames: string[]
-): Promise<Map<string, NuGetPackageMetadata | null>> {
+export async function batchQueryPackages(packageNames: string[]): Promise<Map<string, NuGetPackageMetadata | null>> {
   debug(`Batch querying ${packageNames.length} packages`);
   const results = new Map<string, NuGetPackageMetadata | null>();
   await Promise.all(
-    packageNames.map(async name => {
+    packageNames.map(async (name) => {
       const metadata = await queryNuGetPackage(name);
       results.set(name, metadata);
-    })
+    }),
   );
   return results;
 }

@@ -3,14 +3,14 @@ import { debug } from '../utils/logger.js';
 
 /**
  * Recursively discover files matching patterns
- * 
+ *
  * Why: Constitution principle IV (Performance) requires efficient scanning.
  * fast-glob is optimized for large directory trees.
  */
 
 /**
  * Scan for files matching glob patterns
- * 
+ *
  * @param patterns - Glob patterns to match
  * @param cwd - Current working directory (project root)
  * @param ignore - Patterns to ignore
@@ -19,7 +19,7 @@ import { debug } from '../utils/logger.js';
 export async function scanFiles(
   patterns: string | string[],
   cwd: string,
-  ignore: string[] = ['**/node_modules/**', '**/bin/**', '**/obj/**']
+  ignore: string[] = ['**/node_modules/**', '**/bin/**', '**/obj/**'],
 ): Promise<string[]> {
   debug(`Scanning files with patterns: ${JSON.stringify(patterns)}`);
   debug(`CWD: ${cwd}`);
@@ -38,7 +38,7 @@ export async function scanFiles(
 
 /**
  * Find all .csproj files in a directory tree
- * 
+ *
  * @param projectPath - Root path to scan
  * @returns Array of .csproj file paths
  */
@@ -48,7 +48,7 @@ export async function findProjectFiles(projectPath: string): Promise<string[]> {
 
 /**
  * Find all C# source files
- * 
+ *
  * @param projectPath - Root path to scan
  * @returns Array of .cs file paths
  */
@@ -58,7 +58,7 @@ export async function findCSharpFiles(projectPath: string): Promise<string[]> {
 
 /**
  * Find all JavaScript/TypeScript files in App_Plugins
- * 
+ *
  * @param projectPath - Root path to scan
  * @returns Array of .js/.ts file paths
  */
@@ -68,7 +68,7 @@ export async function findAppPluginFiles(projectPath: string): Promise<string[]>
 
 /**
  * Find all Razor view files
- * 
+ *
  * @param projectPath - Root path to scan
  * @returns Array of .cshtml file paths
  */

@@ -1,6 +1,6 @@
 /**
  * Logger utility with debug mode support
- * 
+ *
  * Why: Constitution principle V requires clear documentation.
  * Debug mode allows developers to trace rule evaluation decisions.
  */

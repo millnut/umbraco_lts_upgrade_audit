@@ -1,15 +1,15 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { findCSharpFiles } from '../scanners/file-scanner.js';
-import { searchMultiplePatterns } from '../scanners/code-searcher.js';
 import { createFinding } from '../models/finding.js';
+import { searchMultiplePatterns } from '../scanners/code-searcher.js';
+import { findCSharpFiles } from '../scanners/file-scanner.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 8: Published Snapshot Interfaces
- * 
+ *
  * Detects usage of IPublishedSnapshotAccessor and IPublishedSnapshot interfaces
  * that require updates in Umbraco 17.
- * 
+ *
  * Hours:
  * - 0.5h fixed total if ANY *.generated.cs files contain these interfaces
  *   (regenerating all models is a one-time task)
@@ -23,17 +23,12 @@ const BASE_HOURS_REGULAR = 0.5;
 /**
  * List of published snapshot interfaces to detect
  */
-const SNAPSHOT_INTERFACES = [
-  'IPublishedSnapshotAccessor',
-  'IPublishedSnapshot',
-];
+const SNAPSHOT_INTERFACES = ['IPublishedSnapshotAccessor', 'IPublishedSnapshot'];
 
 /**
  * Build regex patterns to match interface usage
  */
-const PATTERNS = SNAPSHOT_INTERFACES.map(
-  (interfaceName) => new RegExp(`\\b${interfaceName}\\b`, 'g')
-);
+const PATTERNS = SNAPSHOT_INTERFACES.map((interfaceName) => new RegExp(`\\b${interfaceName}\\b`, 'g'));
 
 /**
  * Check if a file is a generated file
@@ -60,7 +55,12 @@ export const rule08PublishedSnapshotInterfaces: Rule = {
     debug(`[${RULE_ID}] Scanning ${csFiles.length} C# files`);
 
     const generatedFilesWithMatches: Array<{ filePath: string; lineNumber: number; lineContent: string }> = [];
-    const regularFilesWithMatches: Array<{ filePath: string; lineNumber: number; lineContent: string; matchCount: number }> = [];
+    const regularFilesWithMatches: Array<{
+      filePath: string;
+      lineNumber: number;
+      lineContent: string;
+      matchCount: number;
+    }> = [];
 
     // Scan all files and categorize findings
     for (const filePath of csFiles) {
@@ -69,7 +69,7 @@ export const rule08PublishedSnapshotInterfaces: Rule = {
       if (matches.length > 0) {
         const isGenerated = isGeneratedFile(filePath);
         const firstMatch = matches[0];
-        
+
         if (isGenerated) {
           generatedFilesWithMatches.push({
             filePath,
@@ -104,7 +104,7 @@ export const rule08PublishedSnapshotInterfaces: Rule = {
           fileType: 'generated',
           generatedFileCount: generatedFilesWithMatches.length,
           note: 'Regenerating all models is a one-time task',
-        }
+        },
       );
 
       findings.push(finding);
@@ -125,13 +125,15 @@ export const rule08PublishedSnapshotInterfaces: Rule = {
           interfaceName: interfaceName || 'Unknown',
           occurrenceCount: fileMatch.matchCount,
           fileType: 'regular',
-        }
+        },
       );
 
       findings.push(finding);
     }
 
-    debug(`[${RULE_ID}] Created ${findings.length} findings (${generatedFilesWithMatches.length} generated files, ${regularFilesWithMatches.length} regular files)`);
+    debug(
+      `[${RULE_ID}] Created ${findings.length} findings (${generatedFilesWithMatches.length} generated files, ${regularFilesWithMatches.length} regular files)`,
+    );
     return findings;
   },
 };

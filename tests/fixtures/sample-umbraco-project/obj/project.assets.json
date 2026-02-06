@@ -33,9 +33,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Asp.Versioning.Mvc/7.1.1": {
         "type": "package",
@@ -622,9 +620,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Microsoft.AspNetCore.Mvc.Razor.Extensions/6.0.0": {
         "type": "package",
@@ -656,9 +652,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ],
+        "frameworkReferences": ["Microsoft.AspNetCore.App"],
         "build": {
           "buildTransitive/net8.0/Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.targets": {}
         }
@@ -1863,9 +1857,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "MiniProfiler.AspNetCore.Mvc/4.3.8": {
         "type": "package",
@@ -1882,9 +1874,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "MiniProfiler.Shared/4.3.8": {
         "type": "package",
@@ -2134,9 +2124,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "OpenIddict.Client.DataProtection/4.10.1": {
         "type": "package",
@@ -2153,9 +2141,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "OpenIddict.Client.SystemIntegration/4.10.1": {
         "type": "package",
@@ -2291,9 +2277,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "OpenIddict.Server.DataProtection/4.10.1": {
         "type": "package",
@@ -2310,9 +2294,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "OpenIddict.Validation/4.10.1": {
         "type": "package",
@@ -2348,9 +2330,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "OpenIddict.Validation.DataProtection/4.10.1": {
         "type": "package",
@@ -2367,9 +2347,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "OpenIddict.Validation.ServerIntegration/4.10.1": {
         "type": "package",
@@ -2642,9 +2620,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Serilog.Enrichers.Process/2.0.2": {
         "type": "package",
@@ -2894,9 +2870,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ],
+        "frameworkReferences": ["Microsoft.AspNetCore.App"],
         "build": {
           "build/_._": {}
         }
@@ -2912,9 +2886,7 @@
         "runtime": {
           "lib/net7.0/Smidge.dll": {}
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Smidge.Core/4.3.0": {
         "type": "package",
@@ -3119,9 +3091,7 @@
             "related": ".pdb;.xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Swashbuckle.AspNetCore.SwaggerGen/6.5.0": {
         "type": "package",
@@ -3151,9 +3121,7 @@
             "related": ".pdb;.xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "System.AppContext/4.3.0": {
         "type": "package",
@@ -4771,9 +4739,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Umbraco.Cms.Api.Delivery/13.4.1": {
         "type": "package",
@@ -5064,9 +5030,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Umbraco.Cms.Web.Common/13.4.1": {
         "type": "package",
@@ -5095,9 +5059,7 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        "frameworkReferences": ["Microsoft.AspNetCore.App"]
       },
       "Umbraco.Cms.Web.Website/13.4.1": {
         "type": "package",
@@ -17295,11 +17257,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net8.0": [
-      "Serilog >= 3.0.0",
-      "Umbraco.Cloud.Cms.PublicAccess >= 13.0.0",
-      "Umbraco.Cms >= 13.4.1"
-    ]
+    "net8.0": ["Serilog >= 3.0.0", "Umbraco.Cloud.Cms.PublicAccess >= 13.0.0", "Umbraco.Cms >= 13.4.1"]
   },
   "packageFolders": {
     "/Users/leemills/.nuget/packages/": {}
@@ -17313,12 +17271,8 @@
       "packagesPath": "/Users/leemills/.nuget/packages/",
       "outputPath": "/Users/leemills/projects/umbraco-lts-upgrade-audit/tests/fixtures/sample-umbraco-project/obj/",
       "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "/Users/leemills/.nuget/NuGet/NuGet.Config"
-      ],
-      "originalTargetFrameworks": [
-        "net8.0"
-      ],
+      "configFilePaths": ["/Users/leemills/.nuget/NuGet/NuGet.Config"],
+      "originalTargetFrameworks": ["net8.0"],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -17329,9 +17283,7 @@
         }
       },
       "warningProperties": {
-        "warnAsError": [
-          "NU1605"
-        ]
+        "warnAsError": ["NU1605"]
       },
       "restoreAuditProperties": {
         "enableAudit": "true",
@@ -17357,15 +17309,7 @@
             "version": "[13.4.1, )"
           }
         },
-        "imports": [
-          "net461",
-          "net462",
-          "net47",
-          "net471",
-          "net472",
-          "net48",
-          "net481"
-        ],
+        "imports": ["net461", "net462", "net47", "net471", "net472", "net48", "net481"],
         "assetTargetFallback": true,
         "warn": true,
         "downloadDependencies": [
@@ -17401,9 +17345,7 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4g8m-5mj5-c8xg",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1902",
@@ -17411,9 +17353,7 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-54mj-vcvj-q3v5",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1902",
@@ -17421,9 +17361,7 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-5955-cwv4-h7qh",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1902",
@@ -17431,9 +17369,7 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-69cg-w8vm-h229",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1902",
@@ -17441,9 +17377,7 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-fp6q-gccw-7qqm",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1902",
@@ -17451,9 +17385,7 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-hfv2-pf68-m33x",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1902",
@@ -17461,9 +17393,7 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-pgvc-6h2p-q4f6",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1902",
@@ -17471,18 +17401,14 @@
       "warningLevel": 1,
       "message": "Package 'Umbraco.Cms' 13.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-wxw9-6pv9-c3xc",
       "libraryId": "Umbraco.Cms",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     },
     {
       "code": "NU1605",
       "level": "Error",
       "message": "Warning As Error: Detected package downgrade: Serilog from 3.1.1 to 3.0.0. Reference the package directly from the project to select a different version. \n TestProject -> Umbraco.Cms 13.4.1 -> Umbraco.Cms.Persistence.SqlServer 13.4.1 -> Umbraco.Cms.Infrastructure 13.4.1 -> Serilog (>= 3.1.1) \n TestProject -> Serilog (>= 3.0.0)",
       "libraryId": "Serilog",
-      "targetGraphs": [
-        "net8.0"
-      ]
+      "targetGraphs": ["net8.0"]
     }
   ]
 }

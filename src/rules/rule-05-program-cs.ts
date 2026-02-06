@@ -1,16 +1,16 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { scanFiles } from '../scanners/file-scanner.js';
-import { searchInFile } from '../scanners/code-searcher.js';
 import { createFinding } from '../models/finding.js';
+import { searchInFile } from '../scanners/code-searcher.js';
+import { scanFiles } from '../scanners/file-scanner.js';
 import { calculateHours } from '../utils/hours.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 5: Program.cs UseInstallerEndpoints
- * 
+ *
  * Detects use of UseInstallerEndpoints() which has been removed in Umbraco 17.
  * This is typically found in Program.cs files.
- * 
+ *
  * Hours: 0.5h fixed (single configuration change)
  */
 
@@ -53,7 +53,7 @@ export const rule05ProgramCs: Rule = {
           'warning',
           {
             occurrenceCount: matches.length,
-          }
+          },
         );
 
         findings.push(finding);

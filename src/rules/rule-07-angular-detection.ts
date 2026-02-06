@@ -1,18 +1,18 @@
-import type { Rule, RuleContext, Finding } from './types.js';
-import { findAppPluginFiles } from '../scanners/file-scanner.js';
-import { searchMultiplePatterns } from '../scanners/code-searcher.js';
-import { createFinding } from '../models/finding.js';
-import { debug } from '../utils/logger.js';
-import { readFileSync, existsSync } from 'fs';
-import { join, relative, dirname } from 'path';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join, relative } from 'node:path';
 import ignore from 'ignore';
+import { createFinding } from '../models/finding.js';
+import { searchMultiplePatterns } from '../scanners/code-searcher.js';
+import { findAppPluginFiles } from '../scanners/file-scanner.js';
+import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule 7: Angular Detection
- * 
+ *
  * Detects AngularJS patterns in App_Plugins that need migration to Umbraco 17's
  * new backoffice architecture (Lit/Web Components).
- * 
+ *
  * Hours: 5d base + 4h per 10 files
  */
 
@@ -55,7 +55,7 @@ export const rule07AngularDetection: Rule = {
     let gitignorePath = join(parentPath, '.gitignore');
     let gitignoreRoot = parentPath;
     const ig = ignore();
-    
+
     if (existsSync(gitignorePath)) {
       try {
         const gitignoreContent = readFileSync(gitignorePath, 'utf-8');
@@ -68,7 +68,7 @@ export const rule07AngularDetection: Rule = {
       // Try current project directory
       gitignorePath = join(context.projectPath, '.gitignore');
       gitignoreRoot = context.projectPath;
-      
+
       if (existsSync(gitignorePath)) {
         try {
           const gitignoreContent = readFileSync(gitignorePath, 'utf-8');
@@ -109,7 +109,7 @@ export const rule07AngularDetection: Rule = {
           'warning',
           {
             patternCount: matches.length,
-          }
+          },
         );
 
         findings.push(finding);

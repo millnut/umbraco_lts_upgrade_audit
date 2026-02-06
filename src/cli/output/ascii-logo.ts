@@ -2,7 +2,7 @@ import chalk from 'chalk';
 
 /**
  * Umbraco ASCII logo in brand color
- * 
+ *
  * Brand Color: #3544B1 (Umbraco Blue)
  */
 

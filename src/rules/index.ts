@@ -1,9 +1,9 @@
-import type { Rule, RuleContext, Finding } from './types.js';
 import { debug } from '../utils/logger.js';
+import type { Finding, Rule, RuleContext } from './types.js';
 
 /**
  * Rule registry and executor
- * 
+ *
  * Why: Central registry for all rules enables dynamic rule management
  * and supports configuration-based enable/disable.
  */
@@ -15,7 +15,7 @@ const rules: Map<string, Rule> = new Map();
 
 /**
  * Register a rule
- * 
+ *
  * @param rule - Rule to register
  */
 export function registerRule(rule: Rule): void {
@@ -25,7 +25,7 @@ export function registerRule(rule: Rule): void {
 
 /**
  * Get all registered rules
- * 
+ *
  * @returns Array of all rules
  */
 export function getAllRules(): Rule[] {
@@ -34,7 +34,7 @@ export function getAllRules(): Rule[] {
 
 /**
  * Get a specific rule by ID
- * 
+ *
  * @param ruleId - Rule identifier
  * @returns Rule or undefined
  */
@@ -44,7 +44,7 @@ export function getRule(ruleId: string): Rule | undefined {
 
 /**
  * Get enabled rules only
- * 
+ *
  * @returns Array of enabled rules
  */
 export function getEnabledRules(): Rule[] {
@@ -53,7 +53,7 @@ export function getEnabledRules(): Rule[] {
 
 /**
  * Execute all enabled rules against a project
- * 
+ *
  * @param context - Rule execution context
  * @returns All findings from all rules
  */
@@ -81,7 +81,7 @@ export async function executeAllRules(context: RuleContext): Promise<Finding[]> 
 
 /**
  * Enable a rule by ID
- * 
+ *
  * @param ruleId - Rule identifier
  */
 export function enableRule(ruleId: string): void {
@@ -94,7 +94,7 @@ export function enableRule(ruleId: string): void {
 
 /**
  * Disable a rule by ID
- * 
+ *
  * @param ruleId - Rule identifier
  */
 export function disableRule(ruleId: string): void {
@@ -107,7 +107,7 @@ export function disableRule(ruleId: string): void {
 
 /**
  * Update rule base hours
- * 
+ *
  * @param ruleId - Rule identifier
  * @param baseHours - New base hours value
  */

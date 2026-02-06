@@ -1,0 +1,62 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": { "includes": ["**", "!!**/dist"] },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "useEditorconfig": true,
+    "includes": [
+      "**",
+      "!**/node_modules/",
+      "!**/dist/",
+      "!**/coverage/",
+      "!**/*.min.js",
+      "!**/package-lock.json",
+      "!**/yarn.lock",
+      "!**/pnpm-lock.yaml"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    },
+    "includes": ["**", "!node_modules/", "!dist/", "!coverage/", "!*.config.js"]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "single"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.ts", "!tests/**/*.ts"],
+      "javascript": { "globals": [] },
+      "linter": {
+        "rules": {
+          "correctness": { "noUnusedVariables": "error" },
+          "suspicious": { "noConsole": "off", "noExplicitAny": "warn" }
+        }
+      }
+    },
+    {
+      "includes": ["tests/**/*.ts"],
+      "javascript": { "globals": [] },
+      "linter": {
+        "rules": {
+          "correctness": { "noUnusedVariables": "error" },
+          "suspicious": { "noConsole": "off", "noExplicitAny": "warn" }
+        }
+      }
+    }
+  ],
+  "assist": {
+    "enabled": true,
+    "actions": { "source": { "organizeImports": "on" } }
+  }
+}

@@ -2,7 +2,7 @@ import type { AuditReport } from '../../../models/report.js';
 
 /**
  * JSON formatter
- * 
+ *
  * Produces structured JSON suitable for programmatic consumption
  * and integration with other tools.
  */
