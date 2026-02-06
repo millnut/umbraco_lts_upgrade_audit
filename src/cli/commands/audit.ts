@@ -83,24 +83,33 @@ export async function executeAuditCommand(projectPath: string, options: AuditCom
 
   info(`Found ${projectFiles.length} project file(s)`);
 
-  // Detect Umbraco version from first project file
+  // Detect Umbraco version from first project file that contains Umbraco.Cms
   let umbracoVersion: string | null = null;
-  if (projectFiles.length > 0) {
-    const packages = await parseProjectFile(projectFiles[0]);
-    umbracoVersion = extractUmbracoVersion(packages);
+  let umbracoProjectFile: string | null = null;
 
-    if (umbracoVersion) {
-      info(`Detected Umbraco version: ${umbracoVersion}`);
-
-      // Check if version is 13.x but not 13.13.0
-      if (umbracoVersion.startsWith('13.') && umbracoVersion !== '13.13.0') {
-        warn('Before upgrading to v17, you must first upgrade to Umbraco 13.13.0 (the final LTS release of v13).');
-        warn('Please upgrade to 13.13.0 first, then proceed with the v17 upgrade.');
-      }
-    } else {
-      error('Could not detect Umbraco version. This may not be an Umbraco project.');
-      process.exit(1);
+  for (const projectFile of projectFiles) {
+    const packages = await parseProjectFile(projectFile);
+    
+    // Check if this project file contains Umbraco.Cms
+    if (packages.some(pkg => pkg.name === 'Umbraco.Cms')) {
+      umbracoVersion = extractUmbracoVersion(packages);
+      umbracoProjectFile = projectFile;
+      debug(`Found Umbraco.Cms in: ${projectFile}`);
+      break;
     }
+  }
+
+  if (umbracoVersion && umbracoProjectFile) {
+    info(`Detected Umbraco version: ${umbracoVersion}`);
+
+    // Check if version is 13.x but not 13.13.0
+    if (umbracoVersion.startsWith('13.') && umbracoVersion !== '13.13.0') {
+      warn('Before upgrading to v17, you must first upgrade to Umbraco 13.13.0 (the final LTS release of v13).');
+      warn('Please upgrade to 13.13.0 first, then proceed with the v17 upgrade.');
+    }
+  } else {
+    error('Could not detect Umbraco version. No project file contains Umbraco.Cms package reference.');
+    process.exit(1);
   }
 
   // Create rule execution context
