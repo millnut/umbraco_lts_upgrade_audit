@@ -6,7 +6,7 @@ A CLI tool to audit Umbraco 13 LTS projects and estimate upgrade effort to Umbra
 
 - 🔍 Scans Umbraco 13 projects for upgrade-breaking changes
 - 📊 Generates detailed hour estimates based on 10 detection rules
-- 🎨 Beautiful console output with Umbraco branding
+- 🎨 Beautiful console output
 - ⚡ Fast scanning with NuGet API integration
 - 📝 Configurable rules and output formats
 
