@@ -5,7 +5,7 @@ A CLI tool to audit Umbraco 13 LTS projects and estimate upgrade effort to Umbra
 ## Features
 
 - 🔍 Scans Umbraco 13 projects for upgrade-breaking changes
-- 📊 Generates detailed hour estimates based on 7 detection rules
+- 📊 Generates detailed hour estimates based on 10 detection rules
 - 🎨 Beautiful console output with Umbraco branding
 - ⚡ Fast scanning with NuGet API integration
 - 📝 Configurable rules and output formats
@@ -43,17 +43,20 @@ node dist/cli/index.js /path/to/project --output html
 
 ## Detection Rules
 
-The tool applies 7 rules to detect upgrade-relevant changes:
+The tool applies 10 rules to detect upgrade-relevant changes:
 
 | Rule | Detection | Base Hours |
 |------|-----------|------------|
 | **NuGet Package Updates** | Checks package versions against NuGet API | 0.5h for minor/patch, 1.0h for major version bumps |
-| **Obsolete Controller Classes** | Detects 3 controller classes that no longer exist | 1.0h per file |
-| **Tiptap Import Changes** | Finds Tiptap imports needing updates | 0.5h per file |
-| **Removed Packages** | Detects 3 packages removed in v17 | 0.5h per package |
-| **Program.cs Changes** | Finds `UseInstallerEndpoints()` calls | 0.5h fixed |
-| **ViewImports Smidge** | Detects Smidge TagHelper references | 0.5h fixed |
-| **Angular Detection** | Counts AngularJS files in App_Plugins | 40h base (5 days) + 4h per 10 files |
+| **Obsolete Controller Classes** | Detects 3 controller classes that no longer exist (`UmbracoApiController`, `UmbracoAuthorizedApiController`, `UmbracoAuthorizedJsonController`) | 1.0h per file |
+| **Tiptap Import Changes** | Finds Tiptap imports (`@umbraco-cms/backoffice/external/tiptap`) needing updates | 0.5h per file |
+| **Removed Packages** | Detects 3 packages removed in v17 (`Umbraco.Cloud.Cms.PublicAccess`, `Umbraco.Cloud.Identity.Cms`, `Umbraco.Cms.Web.BackOffice`) | 0.5h per package |
+| **Program.cs Changes** | Finds `UseInstallerEndpoints()` calls that have been removed | 0.5h fixed |
+| **ViewImports Smidge Removal** | Detects Smidge TagHelper references in `_ViewImports.cshtml` | 0.5h fixed |
+| **Angular Detection** | Counts AngularJS files in `App_Plugins` requiring migration to Lit/Web Components | 40h base (5 days) + 4h per 10 files |
+| **Published Snapshot Interfaces** | Detects `IPublishedSnapshotAccessor` and `IPublishedSnapshot` usage | 0.5h fixed for generated files, 0.5h per regular file |
+| **Outdated Property Editors** | Detects obsolete property editors in `*.uda` files (`Umbraco.MediaPicker`, `Nested Content`, `Stacked Content`) | 1.0h per occurrence |
+| **License File Structure Changes** | Detects legacy license files (`umbracoDeploy.lic`, `umbracoForms.lic`) needing update for new licensing structure | 0.5h total |
 
 ## Sample Output
 
@@ -124,7 +127,7 @@ npm run format
 ```
 src/
 ├── cli/              # CLI commands and output formatters
-├── rules/            # 7 audit rules
+├── rules/            # 10 audit rules
 ├── scanners/         # File scanning and parsing utilities
 ├── models/           # TypeScript interfaces
 └── utils/            # Shared utilities (logger, hours calc)
@@ -132,7 +135,7 @@ src/
 
 ## Roadmap
 
-- [x] **v0.1.0** - Basic console output with 7 rules (MVP)
+- [x] **v0.1.0** - Basic console output with 10 rules (MVP)
 - [ ] **v0.2.0** - JSON and HTML output formats
 - [ ] **v0.3.0** - YAML configuration support
 - [ ] **v1.0.0** - Detailed findings with code snippets
