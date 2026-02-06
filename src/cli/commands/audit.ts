@@ -19,6 +19,7 @@ import { rule04RemovedPackages } from '../../rules/rule-04-removed-packages.js';
 import { rule05ProgramCs } from '../../rules/rule-05-program-cs.js';
 import { rule06ViewImports } from '../../rules/rule-06-view-imports.js';
 import { rule07AngularDetection } from '../../rules/rule-07-angular-detection.js';
+import { rule08PublishedSnapshotInterfaces } from '../../rules/rule-08-published-snapshot-interfaces.js';
 
 /**
  * Audit command options
@@ -68,6 +69,7 @@ export async function executeAuditCommand(
   registerRule(rule05ProgramCs);
   registerRule(rule06ViewImports);
   registerRule(rule07AngularDetection);
+  registerRule(rule08PublishedSnapshotInterfaces);
 
   debug(`Registered ${getAllRules().length} rules`);
 
