@@ -109,13 +109,13 @@ lines.forEach((line, index) => {
 **Decision**: Single command with options; subcommands reserved for future expansion
 
 **Rationale**:
-- Simple mental model: `umbraco-audit <path> [options]`
+- Simple mental model: `umbaudit <path> [options]`
 - Options for output format, verbosity, config file
 - Exit codes: 0 = success, 1 = audit found issues (not an error), 2 = runtime error
 
 **Command Structure**:
 ```
-umbraco-audit <path>
+umbaudit <path>
   -o, --output <format>    Output format: console (default), json, html
   -c, --config <file>      Custom configuration file
   -v, --verbose            Show detailed findings with code context

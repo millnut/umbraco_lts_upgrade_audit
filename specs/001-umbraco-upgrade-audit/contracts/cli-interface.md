@@ -7,7 +7,7 @@
 ## Command Signature
 
 ```
-umbraco-audit <path> [options]
+umbaudit <path> [options]
 ```
 
 ### Arguments
@@ -94,7 +94,7 @@ H5YR! 🙌 Thanks for using the Umbraco Upgrade Audit Tool!
 interface JsonOutput {
   /** Tool metadata */
   meta: {
-    tool: 'umbraco-audit';
+    tool: 'umbaudit';
     version: string;
     timestamp: string; // ISO 8601
   };
@@ -145,7 +145,7 @@ interface JsonOutput {
 ```json
 {
   "meta": {
-    "tool": "umbraco-audit",
+    "tool": "umbaudit",
     "version": "1.0.0",
     "timestamp": "2026-02-04T15:30:00Z"
   },

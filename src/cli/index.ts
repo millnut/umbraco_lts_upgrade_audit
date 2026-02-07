@@ -13,7 +13,7 @@ import { executeAuditCommand } from './commands/audit.js';
 const program = new Command();
 
 program
-  .name('umbraco-audit')
+  .name('umbaudit')
   .description('CLI tool to audit and estimate upgrade effort for Umbraco 13 LTS to Umbraco 17 LTS')
   .version('0.1.0');
 

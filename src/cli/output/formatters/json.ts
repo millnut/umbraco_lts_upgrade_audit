@@ -11,7 +11,7 @@ export function formatJsonOutput(report: AuditReport): string {
   // Transform report to match contract schema
   const output = {
     meta: {
-      tool: 'umbraco-audit',
+      tool: 'umbaudit',
       version: report.toolVersion,
       timestamp: report.timestamp.toISOString(),
     },

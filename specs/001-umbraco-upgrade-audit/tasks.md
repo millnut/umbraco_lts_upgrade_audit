@@ -72,7 +72,7 @@
 
 **Goal**: Point CLI at Umbraco 13 project, receive report with total hours and breakdown
 
-**Independent Test**: Run `umbraco-audit /path/to/project` and verify table output with totals
+**Independent Test**: Run `umbaudit /path/to/project` and verify table output with totals
 
 ### Implementation for User Story 1
 

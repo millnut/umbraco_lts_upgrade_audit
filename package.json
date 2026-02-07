@@ -1,11 +1,11 @@
 {
-  "name": "umbraco-audit",
+  "name": "umbaudit",
   "version": "0.1.0",
   "description": "CLI tool to audit and estimate upgrade effort for Umbraco 13 LTS to Umbraco 17 LTS migrations",
   "type": "module",
   "main": "dist/cli/index.js",
   "bin": {
-    "umbraco-audit": "dist/cli/index.js"
+    "umbaudit": "dist/cli/index.js"
   },
   "scripts": {
     "build": "tsc",

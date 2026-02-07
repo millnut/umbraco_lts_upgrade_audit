@@ -12,23 +12,23 @@ Get up and running with the Umbraco upgrade audit tool in minutes.
 ### Option 1: Global Install (Recommended)
 
 ```bash
-npm install -g umbraco-audit
+npm install -g umbaudit
 ```
 
 ### Option 2: Run via npx (No Install)
 
 ```bash
-npx umbraco-audit /path/to/project
+npx umbaudit /path/to/project
 ```
 
 ### Option 3: Local Development
 
 ```bash
-git clone https://github.com/your-org/umbraco-audit.git
-cd umbraco-audit
+git clone https://github.com/your-org/umbaudit.git
+cd umbaudit
 npm install
 npm run build
-npm link  # Makes 'umbraco-audit' available globally
+npm link  # Makes 'umbaudit' available globally
 ```
 
 ## Basic Usage
@@ -36,19 +36,19 @@ npm link  # Makes 'umbraco-audit' available globally
 ### Scan a Project Directory
 
 ```bash
-umbraco-audit /path/to/umbraco-project
+umbaudit /path/to/umbraco-project
 ```
 
 ### Scan a Solution File
 
 ```bash
-umbraco-audit /path/to/MySolution.sln
+umbaudit /path/to/MySolution.sln
 ```
 
 ### Scan a Specific Project
 
 ```bash
-umbraco-audit /path/to/MyProject.csproj
+umbaudit /path/to/MyProject.csproj
 ```
 
 ## Output Formats
@@ -58,7 +58,7 @@ umbraco-audit /path/to/MyProject.csproj
 Human-readable table with Umbraco branding:
 
 ```bash
-umbraco-audit /path/to/project
+umbaudit /path/to/project
 ```
 
 ### JSON
@@ -66,7 +66,7 @@ umbraco-audit /path/to/project
 Machine-readable output for CI/CD integration:
 
 ```bash
-umbraco-audit /path/to/project --output json > report.json
+umbaudit /path/to/project --output json > report.json
 ```
 
 ### HTML
@@ -74,23 +74,23 @@ umbraco-audit /path/to/project --output json > report.json
 Shareable report for stakeholders:
 
 ```bash
-umbraco-audit /path/to/project --output html > report.html
+umbaudit /path/to/project --output html > report.html
 ```
 
 ## Common Options
 
 ```bash
 # Show detailed findings with file locations
-umbraco-audit /path/to/project --verbose
+umbaudit /path/to/project --verbose
 
 # Use a custom configuration file
-umbraco-audit /path/to/project --config ./audit-config.yaml
+umbaudit /path/to/project --config ./audit-config.yaml
 
 # Enable debug logging for troubleshooting
-umbraco-audit /path/to/project --debug
+umbaudit /path/to/project --debug
 
 # Disable colored output (useful for CI logs)
-umbraco-audit /path/to/project --no-color
+umbaudit /path/to/project --no-color
 ```
 
 ## Configuration File
@@ -157,10 +157,10 @@ H5YR! 🙌 Thanks for using the Umbraco Upgrade Audit Tool!
 
 ```bash
 # Show all options
-umbraco-audit --help
+umbaudit --help
 
 # Show version
-umbraco-audit --version
+umbaudit --version
 ```
 
 ## What's Next?
