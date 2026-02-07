@@ -1,6 +1,10 @@
 {
   "name": "umbaudit",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/millnut/umbraco_lts_upgrade_audit.git"
+  },
   "description": "CLI tool to audit and estimate upgrade effort for Umbraco 13 LTS to Umbraco 17 LTS migrations",
   "type": "module",
   "main": "dist/cli/index.js",
