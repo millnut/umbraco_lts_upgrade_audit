@@ -2,6 +2,13 @@
 
 A CLI tool to audit Umbraco 13 LTS projects and estimate upgrade effort to Umbraco 17 LTS.
 
+![NPM Last Update](https://img.shields.io/npm/last-update/umbaudit)
+![Node LTS](https://img.shields.io/node/v-lts/umbaudit)
+![NPM Version](https://img.shields.io/npm/v/umbaudit.svg)
+[![License](https://img.shields.io/github/license/millnut/umbraco_lts_upgrade_audit?style=flat-square)](LICENSE.md)
+![NPM Downloads](https://img.shields.io/npm/dw/umbaudit)
+
+
 ## Features
 
 - 🔍 Scans Umbraco 13 projects for upgrade-breaking changes
@@ -10,35 +17,28 @@ A CLI tool to audit Umbraco 13 LTS projects and estimate upgrade effort to Umbra
 - ⚡ Fast scanning with NuGet API integration
 - 📝 Configurable rules and output formats
 
-## Installation
-
-```bash
-npm install
-npm run build
-```
-
 ## Usage
 
 ### Basic Audit
 
 ```bash
-node dist/cli/index.js /path/to/umbraco-project
+npx umbaudit /path/to/umbraco-project
 ```
 
 ### With Options
 
 ```bash
 # Verbose mode (show detailed findings)
-node dist/cli/index.js /path/to/project --verbose
+npx umbaudit /path/to/project --verbose
 
 # Debug mode (show trace logs)
-node dist/cli/index.js /path/to/project --debug
+npx umbaudit /path/to/project --debug
 
 # JSON output
-node dist/cli/index.js /path/to/project --output json
+npx umbaudit /path/to/project --output json
 
 # HTML output (coming soon)
-node dist/cli/index.js /path/to/project --output html
+npx umbaudit /path/to/project --output html
 ```
 
 ## Detection Rules
@@ -108,7 +108,7 @@ npm test
 
 ```bash
 npm run lint
-npm run format
+npm run lint:fix
 ```
 
 ## Architecture
